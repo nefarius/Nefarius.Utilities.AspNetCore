@@ -15,11 +15,61 @@ using Serilog.Sinks.SystemConsole.Themes;
 namespace Nefarius.Utilities.AspNetCore;
 
 /// <summary>
-///     Options to influence <see cref="WebApplicationBuilderExtensions"/>.
+///     W3C Logging options.
 /// </summary>
+[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
+public sealed class W3CLoggingOptions
+{
+    internal W3CLoggingOptions() { }
+
+    /// <summary>
+    ///     Fields to include in log.
+    /// </summary>
+    public W3CLoggingFields LoggingFields { get; init; } = W3CLoggingFields.All;
+
+    /// <summary>
+    ///     Maximum log file size in bytes or null for no limit.
+    /// </summary>
+    public int? FileSizeLimit { get; init; } = 100 * 1024 * 1024;
+
+    /// <summary>
+    ///     Maximum number of files to retain.
+    /// </summary>
+    public int RetainedFileCountLimit { get; init; } = 90;
+
+    /// <summary>
+    ///     Log file name.
+    /// </summary>
+    public string FileName { get; init; } = "access-";
+
+    /// <summary>
+    ///     Period after which the contents will get flushed to the log file.
+    /// </summary>
+    public TimeSpan FlushInterval { get; init; } = TimeSpan.FromSeconds(2);
+}
+
+/// <summary>
+///     Options to influence <see cref="WebApplicationBuilderExtensions" />.
+/// </summary>
+[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
 public sealed class WebApplicationBuilderOptions
 {
-    // TODO: implement me
+    internal WebApplicationBuilderOptions() { }
+
+    /// <summary>
+    ///     Absolute path to directory where logs will get stored.
+    /// </summary>
+    public string LogsDirectory { get; init; } = Path.Combine(AppContext.BaseDirectory, "logs");
+
+    /// <summary>
+    ///     Application (server) log file name.
+    /// </summary>
+    public string ServerLogFileName { get; init; } = "server-.log";
+
+    /// <summary>
+    ///     W3C logging options.
+    /// </summary>
+    public W3CLoggingOptions W3C { get; } = new();
 }
 
 /// <summary>
@@ -38,8 +88,6 @@ public static class WebApplicationBuilderExtensions
 
         configure?.Invoke(options);
 
-        string logsDirectory = Path.Combine(AppContext.BaseDirectory, "logs");
-
         Logger logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -51,7 +99,7 @@ public static class WebApplicationBuilderExtensions
                 theme: AnsiConsoleTheme.Literate
             )
             .WriteTo.File(
-                Path.Combine(logsDirectory, "server-.log"),
+                Path.Combine(options.LogsDirectory, options.ServerLogFileName),
                 rollingInterval: RollingInterval.Day
             )
             .CreateLogger();
@@ -72,14 +120,12 @@ public static class WebApplicationBuilderExtensions
         // save separate access log for analysis
         builder.Services.AddW3CLogging(logging =>
         {
-            // Log all W3C fields
-            logging.LoggingFields = W3CLoggingFields.All;
-
-            logging.FileSizeLimit = 100 * 1024 * 1024;
-            logging.RetainedFileCountLimit = 90;
-            logging.FileName = "access-";
-            logging.LogDirectory = logsDirectory;
-            logging.FlushInterval = TimeSpan.FromSeconds(2);
+            logging.LoggingFields = options.W3C.LoggingFields;
+            logging.FileSizeLimit = options.W3C.FileSizeLimit;
+            logging.RetainedFileCountLimit = options.W3C.RetainedFileCountLimit;
+            logging.FileName = options.W3C.FileName;
+            logging.LogDirectory = options.LogsDirectory;
+            logging.FlushInterval = options.W3C.FlushInterval;
         });
 
         return builder;
