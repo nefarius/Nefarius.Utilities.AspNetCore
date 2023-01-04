@@ -4,10 +4,13 @@ using System.Net.NetworkInformation;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.DependencyInjection;
 
 using Nefarius.Utilities.AspNetCore.Util;
 
 using Serilog;
+
+using IPNetwork2 = System.Net.IPNetwork;
 
 namespace Nefarius.Utilities.AspNetCore;
 
@@ -26,6 +29,8 @@ public static class WebApplicationExtensions
 
         configure?.Invoke(options);
 
+        ILogger logger = app.Services.GetRequiredService<ILogger>();
+
         if (options.UseForwardedHeaders)
         {
             ForwardedHeadersOptions headerOptions = new()
@@ -33,9 +38,10 @@ public static class WebApplicationExtensions
                 ForwardedHeaders = ForwardedHeaders.All, RequireHeaderSymmetry = false, ForwardLimit = null
             };
 
-            foreach (IPNetwork proxy in NetworkUtil.GetNetworks(NetworkInterfaceType.Ethernet))
+            foreach (IPNetwork2 proxy in NetworkUtil.GetNetworks(NetworkInterfaceType.Ethernet))
             {
-                headerOptions.KnownNetworks.Add(proxy);
+                logger.Information("Adding known network {Subnet}", proxy);
+                headerOptions.KnownNetworks.Add(new IPNetwork(proxy.Network, proxy.Cidr));
             }
 
             // this must come first or the wrong client IPs end up in the logs
