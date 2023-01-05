@@ -29,6 +29,9 @@ public static class WebApplicationExtensions
 
         configure?.Invoke(options);
 
+        // required for log rotation with compression to work properly
+        app.Lifetime.ApplicationStopped.Register(Log.CloseAndFlush);
+
         ILogger logger = app.Services.GetRequiredService<ILogger>();
 
         if (options.UseForwardedHeaders)

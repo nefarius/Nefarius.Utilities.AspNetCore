@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.IO.Compression;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using Serilog.Sinks.File.Archive;
 using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Nefarius.Utilities.AspNetCore;
@@ -41,7 +43,8 @@ public static class WebApplicationBuilderExtensions
             )
             .WriteTo.File(
                 Path.Combine(options.LogsDirectory, options.ServerLogFileName),
-                rollingInterval: RollingInterval.Day
+                rollingInterval: RollingInterval.Day,
+                hooks: new ArchiveHooks(CompressionLevel.SmallestSize)
             )
             .CreateLogger();
 
@@ -49,6 +52,8 @@ public static class WebApplicationBuilderExtensions
         Log.Logger = logger;
 
         builder.Host.UseSerilog(logger);
+
+        
 
         builder.Services.AddLogging(b =>
         {
