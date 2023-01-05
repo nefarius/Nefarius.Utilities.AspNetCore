@@ -52,9 +52,7 @@ public static class WebApplicationBuilderExtensions
         Log.Logger = logger;
 
         builder.Host.UseSerilog(logger);
-
         
-
         builder.Services.AddLogging(b =>
         {
             b.SetMinimumLevel(LogLevel.Information);
