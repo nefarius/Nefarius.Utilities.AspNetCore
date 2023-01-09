@@ -11,6 +11,7 @@ My opinionated collection of utilities for ASP.NET Core applications.
 - Sets up logging with [Serilog](https://github.com/serilog/serilog-aspnetcore)
 - Sets up log file rotation and [compression](https://github.com/cocowalla/serilog-sinks-file-archive)
 - Sets up [forwarded headers](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.builder.forwardedheadersextensions.useforwardedheaders?view=aspnetcore-7.0) and auto-configures local networks so the correct client IP ends up in logs and middleware
+  - ⚠️ This assumes that your app sits behind a reverse proxy, **do not enable this setting** if your app faces the Internet directly or header spoofing is possible!
 - ... and more as I start incorporating this lib in my projects!
 
 ## How to use
