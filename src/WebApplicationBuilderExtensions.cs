@@ -5,7 +5,6 @@ using System.IO.Compression;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 using Serilog;
 using Serilog.Core;
@@ -52,14 +51,6 @@ public static class WebApplicationBuilderExtensions
         Log.Logger = logger;
 
         builder.Host.UseSerilog(logger);
-        
-        builder.Services.AddLogging(b =>
-        {
-            b.SetMinimumLevel(LogLevel.Information);
-            b.AddSerilog(logger, true);
-        });
-
-        builder.Services.AddSingleton(new LoggerFactory().AddSerilog(logger));
 
         // save separate access log for analysis
         builder.Services.AddW3CLogging(logging =>
