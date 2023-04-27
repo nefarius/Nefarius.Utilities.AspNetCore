@@ -16,6 +16,8 @@ using Serilog.Events;
 using Serilog.Sinks.File.Archive;
 using Serilog.Sinks.SystemConsole.Themes;
 
+using IPNetwork = System.Net.IPNetwork;
+
 namespace Nefarius.Utilities.AspNetCore;
 
 /// <summary>
@@ -66,19 +68,23 @@ public static class WebApplicationBuilderExtensions
             logging.LogDirectory = options.LogsDirectory;
             logging.FlushInterval = options.W3C.FlushInterval;
         });
-        
+
         // forwarding header options
         builder.Services.Configure<ForwardedHeadersOptions>(headerOptions =>
         {
             headerOptions.ForwardedHeaders = ForwardedHeaders.All;
             headerOptions.RequireHeaderSymmetry = false;
             headerOptions.ForwardLimit = null;
-            
-            foreach (System.Net.IPNetwork proxy in NetworkUtil.GetNetworks(NetworkInterfaceType.Ethernet))
+
+            if (options.AutoDetectPrivateNetworks)
             {
-                logger.Information("Adding known network {Subnet}", proxy);
-                headerOptions.KnownNetworks.Add(new IPNetwork(proxy.Network, proxy.Cidr));
-            }    
+                foreach (IPNetwork proxy in NetworkUtil.GetNetworks(NetworkInterfaceType.Ethernet))
+                {
+                    logger.Information("Adding known network {Subnet}", proxy);
+                    headerOptions.KnownNetworks.Add(
+                        new Microsoft.AspNetCore.HttpOverrides.IPNetwork(proxy.Network, proxy.Cidr));
+                }
+            }
         });
 
         return builder;
