@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
 
+using Nefarius.Utilities.AspNetCore.Options;
 using Nefarius.Utilities.AspNetCore.Util;
 
 using Serilog;

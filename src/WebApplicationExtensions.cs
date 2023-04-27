@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Builder;
 
 using Serilog;
 
+using WebApplicationOptions = Nefarius.Utilities.AspNetCore.Options.WebApplicationOptions;
+
 namespace Nefarius.Utilities.AspNetCore;
 
 /// <summary>
