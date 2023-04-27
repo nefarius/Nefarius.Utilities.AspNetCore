@@ -12,15 +12,7 @@ public sealed class WebApplicationBuilderOptions
 {
     internal WebApplicationBuilderOptions() { }
 
-    /// <summary>
-    ///     Absolute path to directory where logs will get stored.
-    /// </summary>
-    public string LogsDirectory { get; init; } = Path.Combine(AppContext.BaseDirectory, "logs");
-
-    /// <summary>
-    ///     Application (server) log file name.
-    /// </summary>
-    public string ServerLogFileName { get; init; } = "server-.log";
+    public SerilogOptions Serilog { get; } = new();
 
     /// <summary>
     ///     W3C logging options.

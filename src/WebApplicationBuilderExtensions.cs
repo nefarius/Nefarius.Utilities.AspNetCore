@@ -37,22 +37,44 @@ public static class WebApplicationBuilderExtensions
 
         configure?.Invoke(options);
 
-        Logger logger = new LoggerConfiguration()
+        LoggerConfiguration loggerConfiguration = new();
+
+        loggerConfiguration
             .MinimumLevel.Information()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .ReadFrom.Configuration(builder.Configuration)
-            .Enrich.FromLogContext()
-            // required to have colored output in Docker
-            .WriteTo.Console(
+            .Enrich.FromLogContext();
+
+        // apply some overrides that makes logs less noisy
+        foreach ((string scope, LogEventLevel level) in options.Serilog.DefaultOverrides)
+        {
+            loggerConfiguration.MinimumLevel.Override(scope, level);
+        }
+
+        // load additional config from settings file(s)  
+        if (options.Serilog.ReadFromConfiguration)
+        {
+            loggerConfiguration.ReadFrom.Configuration(builder.Configuration);
+        }
+
+        // self-explanatory ;)
+        if (options.Serilog.WriteToConsole)
+        {
+            loggerConfiguration.WriteTo.Console(
                 applyThemeToRedirectedOutput: true,
                 theme: AnsiConsoleTheme.Literate
-            )
-            .WriteTo.File(
-                Path.Combine(options.LogsDirectory, options.ServerLogFileName),
+            );
+        }
+
+        // self-explanatory ;)
+        if (options.Serilog.WriteToFile)
+        {
+            loggerConfiguration.WriteTo.File(
+                Path.Combine(options.Serilog.LogsDirectory, options.Serilog.ServerLogFileName),
                 rollingInterval: RollingInterval.Day,
                 hooks: new ArchiveHooks(CompressionLevel.SmallestSize)
-            )
-            .CreateLogger();
+            );
+        }
+
+        Logger logger = loggerConfiguration.CreateLogger();
 
         // logger instance used by non-DI-code
         Log.Logger = logger;
@@ -66,7 +88,7 @@ public static class WebApplicationBuilderExtensions
             logging.FileSizeLimit = options.W3C.FileSizeLimit;
             logging.RetainedFileCountLimit = options.W3C.RetainedFileCountLimit;
             logging.FileName = options.W3C.FileName;
-            logging.LogDirectory = options.LogsDirectory;
+            logging.LogDirectory = options.W3C.LogsDirectory;
             logging.FlushInterval = options.W3C.FlushInterval;
         });
 
@@ -77,11 +99,13 @@ public static class WebApplicationBuilderExtensions
             headerOptions.RequireHeaderSymmetry = false;
             headerOptions.ForwardLimit = null;
 
+            // this is convenient if e.g. you run an SSL-offloading reverse proxy on your network
+            // when used with Docker, the container IP of the reverse proxy can change so auto-detect fixes that
             if (options.AutoDetectPrivateNetworks)
             {
                 headerOptions.KnownProxies.Clear();
                 headerOptions.KnownNetworks.Clear();
-                
+
                 foreach (IPNetwork proxy in NetworkUtil.GetNetworks(NetworkInterfaceType.Ethernet))
                 {
                     logger.Information("Adding known network {Subnet}", proxy);

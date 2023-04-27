@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 using Microsoft.AspNetCore.HttpLogging;
 
@@ -32,6 +33,11 @@ public sealed class W3CLoggingOptions
     ///     Log file name.
     /// </summary>
     public string FileName { get; init; } = "access-";
+    
+    /// <summary>
+    ///     Absolute path to directory where logs will get stored.
+    /// </summary>
+    public string LogsDirectory { get; init; } = Path.Combine(AppContext.BaseDirectory, "logs");
 
     /// <summary>
     ///     Period after which the contents will get flushed to the log file.
