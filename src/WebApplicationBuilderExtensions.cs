@@ -78,6 +78,9 @@ public static class WebApplicationBuilderExtensions
 
             if (options.AutoDetectPrivateNetworks)
             {
+                headerOptions.KnownProxies.Clear();
+                headerOptions.KnownNetworks.Clear();
+                
                 foreach (IPNetwork proxy in NetworkUtil.GetNetworks(NetworkInterfaceType.Ethernet))
                 {
                     logger.Information("Adding known network {Subnet}", proxy);
