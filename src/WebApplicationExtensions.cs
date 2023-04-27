@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Net.NetworkInformation;
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.Extensions.DependencyInjection;
-
-using Nefarius.Utilities.AspNetCore.Util;
 
 using Serilog;
-
-using IPNetwork2 = System.Net.IPNetwork;
 
 namespace Nefarius.Utilities.AspNetCore;
 
@@ -32,23 +25,10 @@ public static class WebApplicationExtensions
         // required for log rotation with compression to work properly
         app.Lifetime.ApplicationStopped.Register(Log.CloseAndFlush);
 
-        ILogger logger = app.Services.GetRequiredService<ILogger>();
-
         if (options.UseForwardedHeaders)
         {
-            ForwardedHeadersOptions headerOptions = new()
-            {
-                ForwardedHeaders = ForwardedHeaders.All, RequireHeaderSymmetry = false, ForwardLimit = null
-            };
-
-            foreach (IPNetwork2 proxy in NetworkUtil.GetNetworks(NetworkInterfaceType.Ethernet))
-            {
-                logger.Information("Adding known network {Subnet}", proxy);
-                headerOptions.KnownNetworks.Add(new IPNetwork(proxy.Network, proxy.Cidr));
-            }
-
             // this must come first or the wrong client IPs end up in the logs
-            app.UseForwardedHeaders(headerOptions);
+            app.UseForwardedHeaders();
         }
 
         if (options.UseW3CLogging)

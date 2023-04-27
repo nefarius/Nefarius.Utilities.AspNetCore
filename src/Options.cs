@@ -85,5 +85,5 @@ public sealed class WebApplicationOptions
     /// <summary>
     ///     Log web requests to application log as well.
     /// </summary>
-    public bool UseSerilogRequestLogging { get; init; } = true;
+    public bool UseSerilogRequestLogging { get; init; } = false;
 }

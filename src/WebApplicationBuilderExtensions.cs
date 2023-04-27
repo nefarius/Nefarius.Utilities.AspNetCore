@@ -2,9 +2,13 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
+using System.Net.NetworkInformation;
 
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
+
+using Nefarius.Utilities.AspNetCore.Util;
 
 using Serilog;
 using Serilog.Core;
@@ -61,6 +65,20 @@ public static class WebApplicationBuilderExtensions
             logging.FileName = options.W3C.FileName;
             logging.LogDirectory = options.LogsDirectory;
             logging.FlushInterval = options.W3C.FlushInterval;
+        });
+        
+        // forwarding header options
+        builder.Services.Configure<ForwardedHeadersOptions>(headerOptions =>
+        {
+            headerOptions.ForwardedHeaders = ForwardedHeaders.All;
+            headerOptions.RequireHeaderSymmetry = false;
+            headerOptions.ForwardLimit = null;
+            
+            foreach (System.Net.IPNetwork proxy in NetworkUtil.GetNetworks(NetworkInterfaceType.Ethernet))
+            {
+                logger.Information("Adding known network {Subnet}", proxy);
+                headerOptions.KnownNetworks.Add(new IPNetwork(proxy.Network, proxy.Cidr));
+            }    
         });
 
         return builder;
