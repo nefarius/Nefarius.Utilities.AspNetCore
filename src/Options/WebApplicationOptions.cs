@@ -13,15 +13,15 @@ public sealed class WebApplicationOptions
     /// <summary>
     ///     Use UseForwardedHeaders with KnownNetworks auto-filled.
     /// </summary>
-    public bool UseForwardedHeaders { get; init; } = true;
+    public bool UseForwardedHeaders { get; set; } = true;
 
     /// <summary>
     ///     Log to access log file in W3C format.
     /// </summary>
-    public bool UseW3CLogging { get; init; } = true;
+    public bool UseW3CLogging { get; set; } = true;
 
     /// <summary>
     ///     Log web requests to application log as well.
     /// </summary>
-    public bool UseSerilogRequestLogging { get; init; } = false;
+    public bool UseSerilogRequestLogging { get; set; } = false;
 }

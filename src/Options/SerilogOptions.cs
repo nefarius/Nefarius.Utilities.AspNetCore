@@ -14,12 +14,12 @@ public sealed class SerilogOptions
     /// <summary>
     ///     Absolute path to directory where logs will get stored.
     /// </summary>
-    public string LogsDirectory { get; init; } = Path.Combine(AppContext.BaseDirectory, "logs");
+    public string LogsDirectory { get; set; } = Path.Combine(AppContext.BaseDirectory, "logs");
 
     /// <summary>
     ///     Application (server) log file name.
     /// </summary>
-    public string ServerLogFileName { get; init; } = "server-.log";
+    public string ServerLogFileName { get; set; } = "server-.log";
 
     /// <summary>
     ///     A set of log level overrides applied by default.
@@ -38,7 +38,7 @@ public sealed class SerilogOptions
     /// <summary>
     ///     If set, reads and merges configuration from appsettings.*.json files.
     /// </summary>
-    public bool ReadFromConfiguration { get; init; } = true;
+    public bool ReadFromConfiguration { get; set; } = true;
 
     /// <summary>
     ///     If set, writes logs to the console.
@@ -47,7 +47,7 @@ public sealed class SerilogOptions
     ///     Make sure to disable this if you have a duplicate entry in your settings and have
     ///     <see cref="ReadFromConfiguration" />enabled.
     /// </remarks>
-    public bool WriteToConsole { get; init; } = true;
+    public bool WriteToConsole { get; set; } = true;
 
     /// <summary>
     ///     If set, writes log to log file with name <see cref="ServerLogFileName" /> in <see cref="LogsDirectory" />.
@@ -56,5 +56,5 @@ public sealed class SerilogOptions
     ///     Make sure to disable this if you have a duplicate entry in your settings and have
     ///     <see cref="ReadFromConfiguration" />enabled.
     /// </remarks>
-    public bool WriteToFile { get; init; } = true;
+    public bool WriteToFile { get; set; } = true;
 }

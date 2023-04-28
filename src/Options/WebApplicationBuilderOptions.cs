@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Nefarius.Utilities.AspNetCore.Options;
 
@@ -12,6 +10,9 @@ public sealed class WebApplicationBuilderOptions
 {
     internal WebApplicationBuilderOptions() { }
 
+    /// <summary>
+    ///     Serilog logging options.
+    /// </summary>
     public SerilogOptions Serilog { get; } = new();
 
     /// <summary>
@@ -23,5 +24,5 @@ public sealed class WebApplicationBuilderOptions
     ///     If set, will auto-detect local networks and add them as known networks for forwarding header options.
     /// </summary>
     /// <remarks>Only enable this if the service is run behind a reverse proxy, otherwise header spoofing is a possibility!</remarks>
-    public bool AutoDetectPrivateNetworks { get; init; } = true;
+    public bool AutoDetectPrivateNetworks { get; set; } = true;
 }
