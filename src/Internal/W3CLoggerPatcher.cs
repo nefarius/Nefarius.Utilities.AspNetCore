@@ -74,6 +74,12 @@ internal sealed class W3CLoggerPatcher
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
     private static void RollFiles(dynamic fileLoggerProcessor)
     {
+        /*
+         * this might look like a terrible idea and quite slow but this call happens
+         * on a background thread and does file I/O which itself can be rather slow
+         * so we're all good :)
+         */
+        
         string path = GetInstanceField(FileLoggerProcessor, fileLoggerProcessor, "_path");
         string fileName = GetInstanceField(FileLoggerProcessor, fileLoggerProcessor, "_fileName");
         object pathLock = GetInstanceField(FileLoggerProcessor, fileLoggerProcessor, "_pathLock");
