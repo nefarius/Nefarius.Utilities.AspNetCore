@@ -35,7 +35,7 @@
 
   <ItemGroup>
     <PackageReference Include="IPNetwork2" Version="2.6.560" />
-    <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+    <PackageReference Include="MonoMod.RuntimeDetour" Version="22.7.31.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
     <PackageReference Include="Serilog.Sinks.File.Archive" Version="1.0.3" />
   </ItemGroup>
