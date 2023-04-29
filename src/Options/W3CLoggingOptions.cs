@@ -33,7 +33,7 @@ public sealed class W3CLoggingOptions
     ///     Log file name.
     /// </summary>
     public string FileName { get; set; } = "access-";
-    
+
     /// <summary>
     ///     Absolute path to directory where logs will get stored.
     /// </summary>
@@ -43,4 +43,11 @@ public sealed class W3CLoggingOptions
     ///     Period after which the contents will get flushed to the log file.
     /// </summary>
     public TimeSpan FlushInterval { get; set; } = TimeSpan.FromSeconds(2);
+
+    /// <summary>
+    ///     If set, will create a compressed archive copy of a rolled log file and deletes the original afterwards. If false,
+    ///     the log processor will retain its default behaviour (just deletes older files if
+    ///     <see cref="RetainedFileCountLimit" /> is hit).
+    /// </summary>
+    public bool CompressDeletedLogFiles { get; set; } = true;
 }

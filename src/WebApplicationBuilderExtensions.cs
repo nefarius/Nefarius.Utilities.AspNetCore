@@ -38,8 +38,12 @@ public static class WebApplicationBuilderExtensions
 
         configure?.Invoke(options);
 
-        W3CLoggerPatcher.Patch();
-        
+        // apply patch that alters rolling file logic
+        if (options.W3C.CompressDeletedLogFiles)
+        {
+            W3CLoggerPatcher.Patch();
+        }
+
         LoggerConfiguration loggerConfiguration = new();
 
         loggerConfiguration

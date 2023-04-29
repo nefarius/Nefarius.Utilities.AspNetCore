@@ -41,3 +41,9 @@ WebApplication app = builder.Build().Setup();
 ```
 
 and you're all set!
+
+## 3rd party credits
+
+- [MonoMod](https://github.com/MonoMod/MonoMod)
+- [Serilog.Sinks.File.Archive](https://github.com/cocowalla/serilog-sinks-file-archive)
+- [IPNetwork2](https://www.nuget.org/packages/IPNetwork2)
