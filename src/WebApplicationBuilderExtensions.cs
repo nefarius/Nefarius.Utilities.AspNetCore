@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
 
+using Nefarius.Utilities.AspNetCore.Internal;
 using Nefarius.Utilities.AspNetCore.Options;
 using Nefarius.Utilities.AspNetCore.Util;
 
@@ -37,6 +38,8 @@ public static class WebApplicationBuilderExtensions
 
         configure?.Invoke(options);
 
+        W3CLoggerPatcher.Patch();
+        
         LoggerConfiguration loggerConfiguration = new();
 
         loggerConfiguration
