@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -26,6 +27,8 @@ internal sealed class W3CLoggerPatcher
         FileLoggerProcessorType = GetTypeByName("Microsoft.AspNetCore.HttpLogging.FileLoggerProcessor");
     }
 
+    internal static int RetainedCompressedFileCountLimit { get; set; }
+
     /// <summary>
     ///     Patch desired methods.
     /// </summary>
@@ -44,7 +47,7 @@ internal sealed class W3CLoggerPatcher
     {
         _hookRollFiles.Undo();
     }
-    
+
     /// <summary>
     ///     Hooks W3CLoggerProcessor.RollFiles.
     /// </summary>
@@ -65,41 +68,58 @@ internal sealed class W3CLoggerPatcher
         object pathLock = GetInstanceField(FileLoggerProcessorType, fileLoggerProcessor, "_pathLock");
         int? maxRetainedFiles = GetInstanceField(FileLoggerProcessorType, fileLoggerProcessor, "_maxRetainedFiles");
 
-        if (maxRetainedFiles > 0)
+        if (!(maxRetainedFiles > 0))
         {
-            lock (pathLock)
+            return;
+        }
+
+        lock (pathLock)
+        {
+            IEnumerable<FileInfo> sourceFiles = new DirectoryInfo(path)
+                .GetFiles(fileName + "*.txt")
+                .OrderByDescending(f => f.Name)
+                .Skip(maxRetainedFiles.Value);
+
+            foreach (FileInfo originalFile in sourceFiles)
             {
-                var files = new DirectoryInfo(path)
-                    .GetFiles(fileName + "*.txt")
-                    .OrderByDescending(f => f.Name)
-                    .Skip(maxRetainedFiles.Value);
-
-                foreach (var originalFile in files)
+                // do not alter default behaviour for other processors
+                if (type.FullName == "Microsoft.AspNetCore.HttpLogging.W3CLoggerProcessor")
                 {
-                    // do not alter default behaviour for other processors
-                    if (type.FullName == "Microsoft.AspNetCore.HttpLogging.W3CLoggerProcessor")
-                    {
-                        string archiveFileName = $"{originalFile.Name}.tar.gz";
-                        string archiveFilePath = Path.Combine(path, archiveFileName);
+                    string archiveFileName = $"{originalFile.Name}.tar.gz";
+                    string archiveFilePath = Path.Combine(path, archiveFileName);
 
-                        using var outStream = File.Create(archiveFilePath);
-                        using var gzoStream = new GZipOutputStream(outStream);
-                        using var tarArchive = TarArchive.CreateOutputTarArchive(gzoStream);
+                    using FileStream outStream = File.Create(archiveFilePath);
+                    using GZipOutputStream gzoStream = new GZipOutputStream(outStream);
+                    using TarArchive tarArchive = TarArchive.CreateOutputTarArchive(gzoStream);
 
-                        tarArchive.RootPath = "/";
+                    tarArchive.RootPath = "/";
 
-                        var tarEntry = TarEntry.CreateEntryFromFile(originalFile.FullName);
-                        tarEntry.Name = Path.GetFileName(originalFile.FullName);
+                    TarEntry tarEntry = TarEntry.CreateEntryFromFile(originalFile.FullName);
+                    tarEntry.Name = Path.GetFileName(originalFile.FullName);
 
-                        tarArchive.WriteEntry(tarEntry, true);
-                    }
-
-                    originalFile.Delete();
+                    tarArchive.WriteEntry(tarEntry, true);
                 }
+
+                originalFile.Delete();
+            }
+
+            if (RetainedCompressedFileCountLimit <= 0)
+            {
+                return;
+            }
+
+            IEnumerable<FileInfo> archivedFiles = new DirectoryInfo(path)
+                .GetFiles(fileName + "*.tar.gz")
+                .OrderByDescending(f => f.Name)
+                .Skip(RetainedCompressedFileCountLimit);
+
+            foreach (FileInfo archivedFile in archivedFiles)
+            {
+                archivedFile.Delete();
             }
         }
     }
-    
+
     /// <summary>
     ///     Find a type by fully qualified name in all assemblies.
     /// </summary>

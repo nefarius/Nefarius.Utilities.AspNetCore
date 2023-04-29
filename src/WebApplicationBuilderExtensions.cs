@@ -41,6 +41,7 @@ public static class WebApplicationBuilderExtensions
         // apply patch that alters rolling file logic
         if (options.W3C.CompressDeletedLogFiles)
         {
+            W3CLoggerPatcher.RetainedCompressedFileCountLimit = options.W3C.RetainedCompressedFileCountLimit;
             W3CLoggerPatcher.Patch();
         }
 

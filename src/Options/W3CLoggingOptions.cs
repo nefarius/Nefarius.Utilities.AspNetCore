@@ -27,10 +27,10 @@ public sealed class W3CLoggingOptions
     /// <summary>
     ///     Maximum number of files to retain.
     /// </summary>
-    public int RetainedFileCountLimit { get; set; } = 90;
+    public int RetainedFileCountLimit { get; set; } = 3;
 
     /// <summary>
-    ///     Log file name.
+    ///     Log file prefix name.
     /// </summary>
     public string FileName { get; set; } = "access-";
 
@@ -50,4 +50,9 @@ public sealed class W3CLoggingOptions
     ///     <see cref="RetainedFileCountLimit" /> is hit).
     /// </summary>
     public bool CompressDeletedLogFiles { get; set; } = true;
+    
+    /// <summary>
+    ///     Maximum number of compressed files to retain. Set to zero to not delete any.
+    /// </summary>
+    public int RetainedCompressedFileCountLimit { get; set; } = 90;
 }
