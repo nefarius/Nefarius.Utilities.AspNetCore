@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
 
+using Nefarius.Utilities.AspNetCore.Internal;
 using Nefarius.Utilities.AspNetCore.Options;
 using Nefarius.Utilities.AspNetCore.Util;
 
@@ -36,6 +37,13 @@ public static class WebApplicationBuilderExtensions
         WebApplicationBuilderOptions options = new();
 
         configure?.Invoke(options);
+
+        // apply patch that alters rolling file logic
+        if (options.W3C.CompressDeletedLogFiles)
+        {
+            W3CLoggerPatcher.RetainedCompressedFileCountLimit = options.W3C.RetainedCompressedFileCountLimit;
+            W3CLoggerPatcher.Patch();
+        }
 
         LoggerConfiguration loggerConfiguration = new();
 

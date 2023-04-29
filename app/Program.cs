@@ -2,7 +2,10 @@ using FastEndpoints;
 
 using Nefarius.Utilities.AspNetCore;
 
-var builder = WebApplication.CreateBuilder().Setup();
+var builder = WebApplication.CreateBuilder().Setup(options =>
+{
+    options.W3C.RetainedFileCountLimit = 2;
+});
 
 builder.Services.AddFastEndpoints();
 
