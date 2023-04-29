@@ -2,7 +2,7 @@
 
 # Nefarius.Utilities.AspNetCore
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/nefarius/Nefarius.Utilities.AspNetCore/dotnet.yml) ![Nuget](https://img.shields.io/nuget/dt/Nefarius.Utilities.AspNetCore)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/nefarius/Nefarius.Utilities.AspNetCore/dotnet.yml) ![Requirements](https://img.shields.io/badge/Requires-.NET%206.0-blue.svg) [![Nuget](https://img.shields.io/nuget/v/Nefarius.Utilities.AspNetCore)](https://www.nuget.org/packages/Nefarius.Utilities.AspNetCore/) ![Nuget](https://img.shields.io/nuget/dt/Nefarius.Utilities.AspNetCore)
 
 My opinionated collection of utilities for ASP.NET Core applications.
 
