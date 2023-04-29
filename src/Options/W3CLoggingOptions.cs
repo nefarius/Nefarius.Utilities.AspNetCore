@@ -25,7 +25,8 @@ public sealed class W3CLoggingOptions
     public int? FileSizeLimit { get; set; } = 100 * 1024 * 1024;
 
     /// <summary>
-    ///     Maximum number of files to retain.
+    ///     Maximum number of plain-text files to retain. See <see cref="CompressDeletedLogFiles" /> and
+    ///     <see cref="RetainedCompressedFileCountLimit" /> to influence log compression and archived files retention.
     /// </summary>
     public int RetainedFileCountLimit { get; set; } = 3;
 
@@ -50,9 +51,10 @@ public sealed class W3CLoggingOptions
     ///     <see cref="RetainedFileCountLimit" /> is hit).
     /// </summary>
     public bool CompressDeletedLogFiles { get; set; } = true;
-    
+
     /// <summary>
-    ///     Maximum number of compressed files to retain. Set to zero to not delete any.
+    ///     Maximum number of compressed files to retain. Set to zero to not delete any. Does nothing if
+    ///     <see cref="CompressDeletedLogFiles" /> is false.
     /// </summary>
     public int RetainedCompressedFileCountLimit { get; set; } = 90;
 }
