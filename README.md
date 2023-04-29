@@ -9,7 +9,7 @@ My opinionated collection of utilities for ASP.NET Core applications.
 ## Features
 
 - Sets up application (and optionally web requests) logging with [Serilog](https://github.com/serilog/serilog-aspnetcore)
-- Sets up log file rotation and [compression](https://github.com/cocowalla/serilog-sinks-file-archive)
+- Sets up application log file rotation and [compression](https://github.com/cocowalla/serilog-sinks-file-archive)
 - Sets up [W3C logging](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/w3c-logger/) to a separate access log file
   - Compresses rolled W3C log files and allows for their own retention settings
 - Sets up [forwarded headers](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.builder.forwardedheadersextensions.useforwardedheaders?view=aspnetcore-7.0) and auto-configures local networks so the correct client IP ends up in logs and middleware
