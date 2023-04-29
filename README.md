@@ -44,6 +44,25 @@ WebApplication app = builder.Build().Setup();
 
 and you're all set! 👏 The `Setup` extension methods take optional configuration arguments you can provide to alter the default behaviour.
 
+## Example configurations
+
+### Enable and customize W3C log compression
+
+The following settings use the library defaults, they're simply explained here and don't need to be exclusively set if you're satisfied with the defaults 😉
+
+```csharp
+var builder = WebApplication.CreateBuilder().Setup(options =>
+{
+    // this will only keep three most recent uncompressed log files
+    options.W3C.RetainedFileCountLimit = 3;
+    // on rotation, make a compressed archive copy before deleting the original
+    options.W3C.CompressDeletedLogFiles = true;
+    // keeps the last 90 compressed log files on top of the original files
+    // after this, even the compressed logs are finally deleted from disk
+    options.W3C.RetainedCompressedFileCountLimit = 90;
+});
+```
+
 ## 3rd party credits
 
 - [MonoMod](https://github.com/MonoMod/MonoMod)

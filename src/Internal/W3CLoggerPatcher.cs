@@ -35,8 +35,8 @@ internal sealed class W3CLoggerPatcher
     public static void Patch()
     {
         _hookRollFiles = new Hook(
-            FileLoggerProcessorType.GetMethod("RollFiles", BindingFlags.Instance | BindingFlags.NonPublic),
-            typeof(W3CLoggerPatcher).GetMethod("RollFiles", BindingFlags.Static | BindingFlags.NonPublic)
+            FileLoggerProcessorType.GetMethod(nameof(RollFiles), BindingFlags.Instance | BindingFlags.NonPublic),
+            typeof(W3CLoggerPatcher).GetMethod(nameof(RollFiles), BindingFlags.Static | BindingFlags.NonPublic)
         );
     }
 
