@@ -10,8 +10,13 @@ namespace Nefarius.Utilities.AspNetCore.Options;
 ///     W3C Logging options.
 /// </summary>
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public sealed class W3CLoggingOptions
 {
+    private string _compressedLogsDirectory = Path.Combine(AppContext.BaseDirectory, "logs", "archived");
+
+    private string _logsDirectory = Path.Combine(AppContext.BaseDirectory, "logs");
+    
     internal W3CLoggingOptions() { }
 
     /// <summary>
@@ -38,7 +43,20 @@ public sealed class W3CLoggingOptions
     /// <summary>
     ///     Absolute path to directory where logs will get stored.
     /// </summary>
-    public string LogsDirectory { get; set; } = Path.Combine(AppContext.BaseDirectory, "logs");
+    public string LogsDirectory
+    {
+        get => _logsDirectory;
+        set
+        {
+            if (CompressedLogsDirectory == value)
+            {
+                throw new ArgumentException(
+                    $"{nameof(LogsDirectory)} must not be equal to {nameof(CompressedLogsDirectory)}");
+            }
+
+            _logsDirectory = value;
+        }
+    }
 
     /// <summary>
     ///     Period after which the contents will get flushed to the log file.
@@ -57,9 +75,22 @@ public sealed class W3CLoggingOptions
     ///     <see cref="CompressDeletedLogFiles" /> is false.
     /// </summary>
     public int RetainedCompressedFileCountLimit { get; set; } = 90;
-    
+
     /// <summary>
     ///     Absolute path to directory where compressed/archived logs will get stored.
     /// </summary>
-    public string CompressedLogsDirectory { get; set; } = Path.Combine(AppContext.BaseDirectory, "logs", "archived");
+    public string CompressedLogsDirectory
+    {
+        get => _compressedLogsDirectory;
+        set
+        {
+            if (LogsDirectory == value)
+            {
+                throw new ArgumentException(
+                    $"{nameof(CompressedLogsDirectory)} must not be equal to {nameof(LogsDirectory)}");
+            }
+
+            _compressedLogsDirectory = value;
+        }
+    }
 }
