@@ -13,10 +13,22 @@ namespace Nefarius.Utilities.AspNetCore.Options;
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 public sealed class W3CLoggingOptions
 {
+    private const int MaxFileCount = 10000;
+
     private string _compressedLogsDirectory = Path.Combine(AppContext.BaseDirectory, "logs", "archived");
 
+    private string _fileName = "access-";
+
+    private int? _fileSizeLimit = 100 * 1024 * 1024;
+
+    private TimeSpan _flushInterval = TimeSpan.FromSeconds(2);
+
     private string _logsDirectory = Path.Combine(AppContext.BaseDirectory, "logs");
-    
+
+    private int _retainedCompressedFileCountLimit = 90;
+
+    private int _retainedFileCountLimit = 3;
+
     internal W3CLoggingOptions() { }
 
     /// <summary>
@@ -27,18 +39,55 @@ public sealed class W3CLoggingOptions
     /// <summary>
     ///     Maximum log file size in bytes or null for no limit.
     /// </summary>
-    public int? FileSizeLimit { get; set; } = 100 * 1024 * 1024;
+    public int? FileSizeLimit
+    {
+        get => _fileSizeLimit;
+        set
+        {
+            if (value <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(FileSizeLimit)} must be positive.");
+            }
+
+            _fileSizeLimit = value;
+        }
+    }
 
     /// <summary>
     ///     Maximum number of plain-text files to retain. See <see cref="CompressDeletedLogFiles" /> and
     ///     <see cref="RetainedCompressedFileCountLimit" /> to influence log compression and archived files retention.
     /// </summary>
-    public int RetainedFileCountLimit { get; set; } = 3;
+    public int RetainedFileCountLimit
+    {
+        get => _retainedFileCountLimit;
+        set
+        {
+            if (value is <= 0 or > MaxFileCount)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value),
+                    $"{nameof(RetainedFileCountLimit)} must be between 1 and 10,000 (inclusive)");
+            }
+
+            _retainedFileCountLimit = value;
+        }
+    }
 
     /// <summary>
     ///     Log file prefix name.
     /// </summary>
-    public string FileName { get; set; } = "access-";
+    public string FileName
+    {
+        get => _fileName;
+        set
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            _fileName = value;
+        }
+    }
 
     /// <summary>
     ///     Absolute path to directory where logs will get stored.
@@ -54,6 +103,11 @@ public sealed class W3CLoggingOptions
                     $"{nameof(LogsDirectory)} must not be equal to {nameof(CompressedLogsDirectory)}");
             }
 
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             _logsDirectory = value;
         }
     }
@@ -61,7 +115,19 @@ public sealed class W3CLoggingOptions
     /// <summary>
     ///     Period after which the contents will get flushed to the log file.
     /// </summary>
-    public TimeSpan FlushInterval { get; set; } = TimeSpan.FromSeconds(2);
+    public TimeSpan FlushInterval
+    {
+        get => _flushInterval;
+        set
+        {
+            if (value <= TimeSpan.Zero)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(FlushInterval)} must be positive.");
+            }
+
+            _flushInterval = value;
+        }
+    }
 
     /// <summary>
     ///     If set, will create a compressed archive copy of a rolled log file and deletes the original afterwards. If false,
@@ -74,7 +140,20 @@ public sealed class W3CLoggingOptions
     ///     Maximum number of compressed files to retain. Set to zero to not delete any. Does nothing if
     ///     <see cref="CompressDeletedLogFiles" /> is false.
     /// </summary>
-    public int RetainedCompressedFileCountLimit { get; set; } = 90;
+    public int RetainedCompressedFileCountLimit
+    {
+        get => _retainedCompressedFileCountLimit;
+        set
+        {
+            if (value is <= 0 or > MaxFileCount)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value),
+                    $"{nameof(RetainedCompressedFileCountLimit)} must be between 1 and 10,000 (inclusive)");
+            }
+
+            _retainedCompressedFileCountLimit = value;
+        }
+    }
 
     /// <summary>
     ///     Absolute path to directory where compressed/archived logs will get stored.
@@ -88,6 +167,11 @@ public sealed class W3CLoggingOptions
             {
                 throw new ArgumentException(
                     $"{nameof(CompressedLogsDirectory)} must not be equal to {nameof(LogsDirectory)}");
+            }
+
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(value));
             }
 
             _compressedLogsDirectory = value;
