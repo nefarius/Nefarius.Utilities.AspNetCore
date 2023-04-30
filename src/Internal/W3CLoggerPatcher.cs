@@ -11,6 +11,8 @@ using ICSharpCode.SharpZipLib.Tar;
 
 using MonoMod.RuntimeDetour;
 
+using Serilog;
+
 namespace Nefarius.Utilities.AspNetCore.Internal;
 
 /// <summary>
@@ -28,6 +30,8 @@ internal sealed class W3CLoggerPatcher
     }
 
     internal static int RetainedCompressedFileCountLimit { get; set; }
+    
+    internal static string CompressedLogsDirectory { get; set; } 
 
     /// <summary>
     ///     Patch desired methods.
@@ -63,6 +67,7 @@ internal sealed class W3CLoggerPatcher
          */
 
         Type type = fileLoggerProcessor.GetType();
+        bool isW3CLogger = type.FullName == "Microsoft.AspNetCore.HttpLogging.W3CLoggerProcessor";
         string path = GetInstanceField(FileLoggerProcessorType, fileLoggerProcessor, "_path");
         string fileName = GetInstanceField(FileLoggerProcessorType, fileLoggerProcessor, "_fileName");
         object pathLock = GetInstanceField(FileLoggerProcessorType, fileLoggerProcessor, "_pathLock");
@@ -83,13 +88,15 @@ internal sealed class W3CLoggerPatcher
             foreach (FileInfo originalFile in sourceFiles)
             {
                 // do not alter default behaviour for other processors
-                if (type.FullName == "Microsoft.AspNetCore.HttpLogging.W3CLoggerProcessor")
+                if (isW3CLogger)
                 {
+                    Directory.CreateDirectory(CompressedLogsDirectory);
+                    
                     string archiveFileName = $"{originalFile.Name}.tar.gz";
-                    string archiveFilePath = Path.Combine(path, archiveFileName);
+                    string archiveFilePath = Path.Combine(CompressedLogsDirectory, archiveFileName);
 
                     using FileStream outStream = File.Create(archiveFilePath);
-                    using GZipOutputStream gzoStream = new GZipOutputStream(outStream);
+                    using GZipOutputStream gzoStream = new(outStream);
                     using TarArchive tarArchive = TarArchive.CreateOutputTarArchive(gzoStream);
 
                     tarArchive.RootPath = "/";
@@ -98,9 +105,17 @@ internal sealed class W3CLoggerPatcher
                     tarEntry.Name = Path.GetFileName(originalFile.FullName);
 
                     tarArchive.WriteEntry(tarEntry, true);
+                    
+                    Log.Logger.Debug("Compressed file {File}", originalFile.Name);
                 }
 
+                Log.Logger.Debug("Deleting file {File}", originalFile.Name);
                 originalFile.Delete();
+            }
+
+            if (!isW3CLogger)
+            {
+                return;
             }
 
             if (RetainedCompressedFileCountLimit <= 0)
@@ -108,13 +123,14 @@ internal sealed class W3CLoggerPatcher
                 return;
             }
 
-            IEnumerable<FileInfo> archivedFiles = new DirectoryInfo(path)
+            IEnumerable<FileInfo> archivedFiles = new DirectoryInfo(CompressedLogsDirectory)
                 .GetFiles(fileName + "*.tar.gz")
                 .OrderByDescending(f => f.Name)
                 .Skip(RetainedCompressedFileCountLimit);
 
             foreach (FileInfo archivedFile in archivedFiles)
             {
+                Log.Logger.Debug("Deleting compressed file {File}", archivedFile.Name);
                 archivedFile.Delete();
             }
         }

@@ -57,4 +57,9 @@ public sealed class W3CLoggingOptions
     ///     <see cref="CompressDeletedLogFiles" /> is false.
     /// </summary>
     public int RetainedCompressedFileCountLimit { get; set; } = 90;
+    
+    /// <summary>
+    ///     Absolute path to directory where compressed/archived logs will get stored.
+    /// </summary>
+    public string CompressedLogsDirectory { get; set; } = Path.Combine(AppContext.BaseDirectory, "logs", "archived");
 }

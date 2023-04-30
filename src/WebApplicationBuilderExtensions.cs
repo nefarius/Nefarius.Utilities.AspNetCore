@@ -42,6 +42,7 @@ public static class WebApplicationBuilderExtensions
         if (options.W3C.CompressDeletedLogFiles)
         {
             W3CLoggerPatcher.RetainedCompressedFileCountLimit = options.W3C.RetainedCompressedFileCountLimit;
+            W3CLoggerPatcher.CompressedLogsDirectory = options.W3C.CompressedLogsDirectory;
             W3CLoggerPatcher.Patch();
         }
 
