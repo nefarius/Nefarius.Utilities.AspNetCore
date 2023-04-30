@@ -94,6 +94,10 @@ public sealed class W3CLoggingOptions
     ///     Absolute path to directory where logs will get stored. Defaults to "logs" sub-directory within the application root
     ///     path.
     /// </summary>
+    /// <remarks>
+    ///     You MUST NOT set <see cref="CompressedLogsDirectory" /> to the same location, or you risk other log processors
+    ///     within ASP.NET Core to accidentally delete your archived logs.
+    /// </remarks>
     public string LogsDirectory
     {
         get => _logsDirectory;
@@ -161,6 +165,10 @@ public sealed class W3CLoggingOptions
     ///     Absolute path to directory where compressed/archived logs will get stored. Defaults to "logs/archived"
     ///     sub-directory within the application root path.
     /// </summary>
+    /// <remarks>
+    ///     You MUST NOT set <see cref="LogsDirectory" /> to the same location, or you risk other log processors
+    ///     within ASP.NET Core to accidentally delete your archived logs.
+    /// </remarks>
     public string CompressedLogsDirectory
     {
         get => _compressedLogsDirectory;
