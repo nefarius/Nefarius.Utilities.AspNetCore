@@ -32,12 +32,12 @@ public sealed class W3CLoggingOptions
     internal W3CLoggingOptions() { }
 
     /// <summary>
-    ///     Fields to include in log.
+    ///     Fields to include in log. Defaults to all of them.
     /// </summary>
     public W3CLoggingFields LoggingFields { get; set; } = W3CLoggingFields.All;
 
     /// <summary>
-    ///     Maximum log file size in bytes or null for no limit.
+    ///     Maximum log file size in bytes or null for no limit. Defaults to 100 MB.
     /// </summary>
     public int? FileSizeLimit
     {
@@ -55,7 +55,8 @@ public sealed class W3CLoggingOptions
 
     /// <summary>
     ///     Maximum number of plain-text files to retain. See <see cref="CompressDeletedLogFiles" /> and
-    ///     <see cref="RetainedCompressedFileCountLimit" /> to influence log compression and archived files retention.
+    ///     <see cref="RetainedCompressedFileCountLimit" /> to influence log compression and archived files retention. Defaults
+    ///     to 3.
     /// </summary>
     public int RetainedFileCountLimit
     {
@@ -73,7 +74,7 @@ public sealed class W3CLoggingOptions
     }
 
     /// <summary>
-    ///     Log file prefix name.
+    ///     Log file prefix name. Defaults to "access-".
     /// </summary>
     public string FileName
     {
@@ -90,7 +91,8 @@ public sealed class W3CLoggingOptions
     }
 
     /// <summary>
-    ///     Absolute path to directory where logs will get stored.
+    ///     Absolute path to directory where logs will get stored. Defaults to "logs" sub-directory within the application root
+    ///     path.
     /// </summary>
     public string LogsDirectory
     {
@@ -113,7 +115,7 @@ public sealed class W3CLoggingOptions
     }
 
     /// <summary>
-    ///     Period after which the contents will get flushed to the log file.
+    ///     Period after which the contents will get flushed to the log file. Defaults to 2 seconds.
     /// </summary>
     public TimeSpan FlushInterval
     {
@@ -132,13 +134,13 @@ public sealed class W3CLoggingOptions
     /// <summary>
     ///     If set, will create a compressed archive copy of a rolled log file and deletes the original afterwards. If false,
     ///     the log processor will retain its default behaviour (just deletes older files if
-    ///     <see cref="RetainedFileCountLimit" /> is hit).
+    ///     <see cref="RetainedFileCountLimit" /> is hit). Defaults to true.
     /// </summary>
     public bool CompressDeletedLogFiles { get; set; } = true;
 
     /// <summary>
     ///     Maximum number of compressed files to retain. Set to zero to not delete any. Does nothing if
-    ///     <see cref="CompressDeletedLogFiles" /> is false.
+    ///     <see cref="CompressDeletedLogFiles" /> is false. Defaults to 90.
     /// </summary>
     public int RetainedCompressedFileCountLimit
     {
@@ -156,7 +158,8 @@ public sealed class W3CLoggingOptions
     }
 
     /// <summary>
-    ///     Absolute path to directory where compressed/archived logs will get stored.
+    ///     Absolute path to directory where compressed/archived logs will get stored. Defaults to "logs/archived"
+    ///     sub-directory within the application root path.
     /// </summary>
     public string CompressedLogsDirectory
     {
