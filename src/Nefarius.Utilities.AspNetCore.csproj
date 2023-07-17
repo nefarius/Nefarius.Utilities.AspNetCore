@@ -35,7 +35,7 @@
 
   <ItemGroup>
     <PackageReference Include="IPNetwork2" Version="2.6.598" />
-    <PackageReference Include="MonoMod.RuntimeDetour" Version="22.7.31.1" />
+    <PackageReference Include="MonoMod.RuntimeDetour" Version="25.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
     <PackageReference Include="Serilog.Sinks.File.Archive" Version="1.0.3" />
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
