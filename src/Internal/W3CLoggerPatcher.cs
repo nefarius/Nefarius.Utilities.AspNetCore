@@ -21,7 +21,7 @@ namespace Nefarius.Utilities.AspNetCore.Internal;
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 internal sealed class W3CLoggerPatcher
 {
-    private static IDetour _hookRollFiles;
+    private static Hook _hookRollFiles;
     private static readonly Type FileLoggerProcessorType;
 
     static W3CLoggerPatcher()
@@ -39,8 +39,8 @@ internal sealed class W3CLoggerPatcher
     public static void Patch()
     {
         _hookRollFiles = new Hook(
-            FileLoggerProcessorType.GetMethod(nameof(RollFiles), BindingFlags.Instance | BindingFlags.NonPublic),
-            typeof(W3CLoggerPatcher).GetMethod(nameof(RollFiles), BindingFlags.Static | BindingFlags.NonPublic)
+            FileLoggerProcessorType.GetMethod(nameof(RollFiles), BindingFlags.Instance | BindingFlags.NonPublic)!,
+            typeof(W3CLoggerPatcher).GetMethod(nameof(RollFiles), BindingFlags.Static | BindingFlags.NonPublic)!
         );
     }
 
