@@ -59,7 +59,7 @@ var builder = WebApplication.CreateBuilder().Setup(options =>
     options.W3C.CompressDeletedLogFiles = true;
     // keeps the last 90 compressed log files on top of the original files
     // after this, even the compressed logs are finally deleted from disk
-    options.W3C.RetainedCompressedFileCountLimit = 90;
+    options.W3C.RetainedCompressedFileCountLimit = 180;
 });
 ```
 
