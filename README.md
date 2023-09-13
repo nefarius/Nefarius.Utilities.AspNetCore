@@ -54,7 +54,7 @@ The following settings use the library defaults, they're simply explained here a
 var builder = WebApplication.CreateBuilder().Setup(options =>
 {
     // this will only keep three most recent uncompressed log files
-    options.W3C.RetainedFileCountLimit = 3;
+    options.W3C.RetainedFileCountLimit = 6;
     // on rotation, make a compressed archive copy before deleting the original
     options.W3C.CompressDeletedLogFiles = true;
     // keeps the last 90 compressed log files on top of the original files

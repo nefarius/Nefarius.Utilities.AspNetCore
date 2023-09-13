@@ -27,7 +27,7 @@ public sealed class W3CLoggingOptions
 
     private int _retainedCompressedFileCountLimit = 180;
 
-    private int _retainedFileCountLimit = 3;
+    private int _retainedFileCountLimit = 6;
 
     internal W3CLoggingOptions() { }
 
