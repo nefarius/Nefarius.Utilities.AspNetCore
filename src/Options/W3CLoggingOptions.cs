@@ -56,7 +56,7 @@ public sealed class W3CLoggingOptions
     /// <summary>
     ///     Maximum number of plain-text files to retain. See <see cref="CompressDeletedLogFiles" /> and
     ///     <see cref="RetainedCompressedFileCountLimit" /> to influence log compression and archived files retention. Defaults
-    ///     to 6.
+    ///     to 3.
     /// </summary>
     public int RetainedFileCountLimit
     {
@@ -144,7 +144,7 @@ public sealed class W3CLoggingOptions
 
     /// <summary>
     ///     Maximum number of compressed files to retain. Set to zero to not delete any. Does nothing if
-    ///     <see cref="CompressDeletedLogFiles" /> is false. Defaults to 180.
+    ///     <see cref="CompressDeletedLogFiles" /> is false. Defaults to 90.
     /// </summary>
     public int RetainedCompressedFileCountLimit
     {
