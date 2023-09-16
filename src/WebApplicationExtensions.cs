@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 
 using Serilog;
 
@@ -20,7 +21,11 @@ public static class WebApplicationExtensions
     /// </summary>
     public static WebApplication Setup(this WebApplication app, Action<WebApplicationOptions> configure = default)
     {
-        WebApplicationOptions options = new();
+        WebApplicationOptions options =
+            app.Configuration
+                .GetSection(nameof(WebApplicationOptions))
+                .Get<WebApplicationOptions>()
+            ?? new WebApplicationOptions();
 
         configure?.Invoke(options);
 

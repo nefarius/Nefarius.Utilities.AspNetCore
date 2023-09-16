@@ -25,9 +25,9 @@ public sealed class W3CLoggingOptions
 
     private string _logsDirectory = Path.Combine(AppContext.BaseDirectory, "logs");
 
-    private int _retainedCompressedFileCountLimit = 180;
+    private int _retainedCompressedFileCountLimit = 90;
 
-    private int _retainedFileCountLimit = 6;
+    private int _retainedFileCountLimit = 3;
 
     internal W3CLoggingOptions() { }
 

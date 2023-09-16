@@ -46,7 +46,9 @@ and you're all set! 👏 The `Setup` extension methods take optional configurati
 
 ## Example configurations
 
-### Enable and customize W3C log compression
+### From code
+
+#### Enable and customize W3C log compression
 
 The following settings use the library defaults, they're simply explained here and don't need to be exclusively set if you're satisfied with the defaults 😉
 
@@ -54,14 +56,37 @@ The following settings use the library defaults, they're simply explained here a
 var builder = WebApplication.CreateBuilder().Setup(options =>
 {
     // this will only keep three most recent uncompressed log files
-    options.W3C.RetainedFileCountLimit = 6;
+    options.W3C.RetainedFileCountLimit = 3;
     // on rotation, make a compressed archive copy before deleting the original
     options.W3C.CompressDeletedLogFiles = true;
     // keeps the last 90 compressed log files on top of the original files
     // after this, even the compressed logs are finally deleted from disk
-    options.W3C.RetainedCompressedFileCountLimit = 180;
+    options.W3C.RetainedCompressedFileCountLimit = 90;
 });
 ```
+
+### From `appsettings.json`
+
+You can also alter the defaults from your configuration; simply stick to the options classes and property naming conventions like so: 
+
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "WebApplicationBuilderOptions": {
+    "AutoDetectPrivateNetworks": false
+  },
+  "WebApplicationOptions": {
+    "UseForwardedHeaders": false
+  }
+}
+```
+
+Bear in mind that changing the same option in code will take priority over application configuration.
 
 ## 3rd party credits
 

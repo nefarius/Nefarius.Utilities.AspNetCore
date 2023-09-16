@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Nefarius.Utilities.AspNetCore.Internal;
@@ -34,7 +35,11 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder Setup(this WebApplicationBuilder builder,
         Action<WebApplicationBuilderOptions> configure = default)
     {
-        WebApplicationBuilderOptions options = new();
+        WebApplicationBuilderOptions options =
+            builder.Configuration
+                .GetSection(nameof(WebApplicationBuilderOptions))
+                .Get<WebApplicationBuilderOptions>()
+            ?? new WebApplicationBuilderOptions();
 
         configure?.Invoke(options);
 
