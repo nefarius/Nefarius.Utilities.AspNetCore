@@ -8,8 +8,6 @@ namespace Nefarius.Utilities.AspNetCore.Options;
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
 public sealed class WebApplicationBuilderOptions
 {
-    internal WebApplicationBuilderOptions() { }
-
     /// <summary>
     ///     Serilog logging options.
     /// </summary>

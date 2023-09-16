@@ -8,8 +8,6 @@ namespace Nefarius.Utilities.AspNetCore.Options;
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
 public sealed class WebApplicationOptions
 {
-    internal WebApplicationOptions() { }
-
     /// <summary>
     ///     Use UseForwardedHeaders with KnownNetworks auto-filled.
     /// </summary>
