@@ -88,6 +88,19 @@ You can also alter the defaults from your configuration; simply stick to the opt
 
 Bear in mind that changing the same option in code will take priority over application configuration.
 
+### From `docker-compose.yml`
+
+Using this format you can change the settings directly in the compose file:
+
+```yml
+...
+    environment:
+      - TZ=Europe/Vienna
+      - WebApplicationBuilderOptions__W3C__RetainedCompressedFileCountLimit=600
+      - WebApplicationBuilderOptions__W3C__RetainedFileCountLimit=12
+...
+```
+
 ## 3rd party credits
 
 - [MonoMod](https://github.com/MonoMod/MonoMod)
