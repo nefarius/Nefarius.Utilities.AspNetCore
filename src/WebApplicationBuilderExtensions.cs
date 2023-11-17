@@ -1,4 +1,5 @@
-﻿using System;
+﻿extern alias IPNetwork2;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
@@ -19,7 +20,8 @@ using Serilog.Events;
 using Serilog.Sinks.File.Archive;
 using Serilog.Sinks.SystemConsole.Themes;
 
-using IPNetwork = System.Net.IPNetwork;
+using IPNetwork = IPNetwork2::System.Net.IPNetwork;
+
 
 namespace Nefarius.Utilities.AspNetCore;
 

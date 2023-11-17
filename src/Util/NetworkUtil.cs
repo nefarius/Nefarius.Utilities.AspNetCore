@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿extern alias IPNetwork2;
+using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+
+using IPNetwork2::System.Net;
 
 namespace Nefarius.Utilities.AspNetCore.Util;
 
@@ -15,7 +17,7 @@ internal static class NetworkUtil
                             n.OperationalStatus ==
                             OperationalStatus.Up) // get all operational networks of a given type
                 .Select(n => n.GetIPProperties()) // get the IPs
-                //.Where(n => n.GatewayAddresses.Any())
+            //.Where(n => n.GatewayAddresses.Any())
             select item.UnicastAddresses.FirstOrDefault(i =>
                 i.Address.AddressFamily == AddressFamily.InterNetwork)
             into ipInfo
