@@ -6,6 +6,12 @@
 
 My opinionated collection of utilities for ASP.NET Core applications.
 
+---
+
+⚠️ **.NET 8 support in the works** ⚠️
+
+---
+
 ## Features
 
 - Sets up application (and optionally web requests) logging with [Serilog](https://github.com/serilog/serilog-aspnetcore)
