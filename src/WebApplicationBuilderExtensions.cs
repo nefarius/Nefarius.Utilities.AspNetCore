@@ -117,7 +117,7 @@ public static class WebApplicationBuilderExtensions
 
             // this is convenient if e.g. you run an SSL-offloading reverse proxy on your network
             // when used with Docker, the container IP of the reverse proxy can change so auto-detect fixes that
-            if (options.AutoDetectPrivateNetworks)
+            if (options.Forwarding.AutoDetectPrivateNetworks)
             {
                 headerOptions.KnownProxies.Clear();
                 headerOptions.KnownNetworks.Clear();
@@ -128,6 +128,13 @@ public static class WebApplicationBuilderExtensions
                     headerOptions.KnownNetworks.Add(
                         new Microsoft.AspNetCore.HttpOverrides.IPNetwork(proxy.Network, proxy.Cidr));
                 }
+            }
+
+            if (options.Forwarding.AllowFromAny)
+            {
+                // clearing skips safety checks in the middleware
+                headerOptions.KnownProxies.Clear();
+                headerOptions.KnownNetworks.Clear();
             }
         });
 

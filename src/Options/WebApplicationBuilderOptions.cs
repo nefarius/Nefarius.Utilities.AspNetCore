@@ -19,8 +19,7 @@ public sealed class WebApplicationBuilderOptions
     public W3CLoggingOptions W3C { get; } = new();
 
     /// <summary>
-    ///     If set, will auto-detect local networks and add them as known networks for forwarding header options.
+    ///     Forwarding options.
     /// </summary>
-    /// <remarks>Only enable this if the service is run behind a reverse proxy, otherwise header spoofing is a possibility!</remarks>
-    public bool AutoDetectPrivateNetworks { get; set; } = true;
+    public ForwardingOptions Forwarding { get; } = new();
 }
