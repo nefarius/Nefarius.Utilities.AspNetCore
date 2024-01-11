@@ -9,7 +9,7 @@ namespace Nefarius.Utilities.AspNetCore.Options;
 public sealed class WebApplicationOptions
 {
     /// <summary>
-    ///     Use UseForwardedHeaders with KnownNetworks auto-filled.
+    ///     Use UseForwardedHeaders with <see cref="ForwardingOptions"/> populated.
     /// </summary>
     public bool UseForwardedHeaders { get; set; } = true;
 
