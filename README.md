@@ -44,6 +44,44 @@ WebApplication app = builder.Build().Setup();
 
 and you're all set! 👏 The `Setup` extension methods take optional configuration arguments you can provide to alter the default behaviour.
 
+### Loading additional configuration
+
+Let's assume you have a custom `/app/secrets/appsettings.json` file adding one or more additional sinks (MongoDB in this example):
+
+```json
+{
+  "Serilog": {
+    "Using": [
+      "Serilog.Sinks.MongoDB"
+    ],
+    "WriteTo": [
+      {
+        "Name": "MongoDBBson",
+        "Args": {
+          "databaseUrl": "mongodb+srv://db-cluster/database?authSource=admin",
+          "collectionName": "logs",
+          "cappedMaxSizeMb": "1024",
+          "cappedMaxDocuments": "50000",
+          "rollingInterval": "Month"
+        }
+      }
+    ]
+  }
+}
+```
+
+To have this configuration file read/merged you can access and modify the `Configuration` of the `WebApplicationBuilderOptions` like so:
+
+```csharp
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args).Setup(opts =>
+{
+    // loads settings from K8s secret
+    opts.Configuration.AddJsonFile("secrets/appsettings.json", optional: true);
+});
+```
+
+This ensures that the Serilog sinks configuration is read early enough when the logger is created. 
+
 ## Example configurations
 
 ### From code
