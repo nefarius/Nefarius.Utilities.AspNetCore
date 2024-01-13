@@ -43,6 +43,8 @@ public static class WebApplicationBuilderExtensions
                 .Get<WebApplicationBuilderOptions>()
             ?? new WebApplicationBuilderOptions();
 
+        options.Configuration = builder.Configuration;
+        
         configure?.Invoke(options);
 
         // apply patch that alters rolling file logic

@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
+using Microsoft.Extensions.Configuration;
+
 namespace Nefarius.Utilities.AspNetCore.Options;
 
 /// <summary>
@@ -22,4 +24,9 @@ public sealed class WebApplicationBuilderOptions
     ///     Forwarding options.
     /// </summary>
     public ForwardingOptions Forwarding { get; } = new();
+
+    /// <summary>
+    ///     Configuration of the hosting provider.
+    /// </summary>
+    public ConfigurationManager Configuration { get; internal set; } = null!;
 }
