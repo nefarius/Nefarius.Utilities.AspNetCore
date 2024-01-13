@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
 namespace Nefarius.Utilities.AspNetCore.Options;
@@ -26,7 +27,12 @@ public sealed class WebApplicationBuilderOptions
     public ForwardingOptions Forwarding { get; } = new();
 
     /// <summary>
-    ///     Configuration of the hosting provider.
+    ///     A collection of configuration providers for the application to compose. This is useful for adding new configuration sources and providers.
     /// </summary>
     public ConfigurationManager Configuration { get; internal set; } = null!;
+    
+    /// <summary>
+    ///     Provides information about the web hosting environment an application is running.
+    /// </summary>
+    public IWebHostEnvironment Environment { get; internal set; } = null!;
 }

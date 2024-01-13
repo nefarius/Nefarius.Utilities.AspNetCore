@@ -44,6 +44,7 @@ public static class WebApplicationBuilderExtensions
             ?? new WebApplicationBuilderOptions();
 
         options.Configuration = builder.Configuration;
+        options.Environment = builder.Environment;
         
         configure?.Invoke(options);
 
