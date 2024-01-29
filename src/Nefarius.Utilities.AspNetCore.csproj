@@ -38,7 +38,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="IPNetwork2" Version="2.6.618">
+        <PackageReference Include="IPNetwork2" Version="3.0.648">
             <Aliases>IPNetwork2</Aliases>
         </PackageReference>
         <PackageReference Include="MonoMod.RuntimeDetour" Version="25.1.0-prerelease.2" />
