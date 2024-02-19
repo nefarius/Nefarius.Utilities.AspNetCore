@@ -20,7 +20,7 @@ using Serilog.Events;
 using Serilog.Sinks.File.Archive;
 using Serilog.Sinks.SystemConsole.Themes;
 
-using IPNetwork = IPNetwork2::System.Net.IPNetwork;
+using IPNetwork = IPNetwork2::System.Net.IPNetwork2;
 
 
 namespace Nefarius.Utilities.AspNetCore;
@@ -45,7 +45,7 @@ public static class WebApplicationBuilderExtensions
 
         options.Configuration = builder.Configuration;
         options.Environment = builder.Environment;
-        
+
         configure?.Invoke(options);
 
         // apply patch that alters rolling file logic

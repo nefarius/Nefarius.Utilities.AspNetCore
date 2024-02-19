@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
-using IPNetwork2::System.Net;
+using IPNetwork = IPNetwork2::System.Net.IPNetwork2;
 
 namespace Nefarius.Utilities.AspNetCore.Util;
 
