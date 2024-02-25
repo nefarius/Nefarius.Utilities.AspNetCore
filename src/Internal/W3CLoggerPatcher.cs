@@ -30,8 +30,8 @@ internal sealed class W3CLoggerPatcher
     }
 
     internal static int RetainedCompressedFileCountLimit { get; set; }
-    
-    internal static string CompressedLogsDirectory { get; set; } 
+
+    internal static string CompressedLogsDirectory { get; set; }
 
     /// <summary>
     ///     Patch desired methods.
@@ -91,7 +91,7 @@ internal sealed class W3CLoggerPatcher
                 if (isW3CLogger)
                 {
                     Directory.CreateDirectory(CompressedLogsDirectory);
-                    
+
                     string archiveFileName = $"{originalFile.Name}.tar.gz";
                     string archiveFilePath = Path.Combine(CompressedLogsDirectory, archiveFileName);
 
@@ -105,11 +105,11 @@ internal sealed class W3CLoggerPatcher
                     tarEntry.Name = Path.GetFileName(originalFile.FullName);
 
                     tarArchive.WriteEntry(tarEntry, true);
-                    
-                    Log.Logger.Debug("Compressed file {File}", originalFile.Name);
+
+                    Log.Logger.ForContext<W3CLoggerPatcher>().Debug("Compressed file {File}", originalFile.Name);
                 }
 
-                Log.Logger.Debug("Deleting file {File}", originalFile.Name);
+                Log.Logger.ForContext<W3CLoggerPatcher>().Debug("Deleting file {File}", originalFile.Name);
                 originalFile.Delete();
             }
 
@@ -130,7 +130,7 @@ internal sealed class W3CLoggerPatcher
 
             foreach (FileInfo archivedFile in archivedFiles)
             {
-                Log.Logger.Debug("Deleting compressed file {File}", archivedFile.Name);
+                Log.Logger.ForContext<W3CLoggerPatcher>().Debug("Deleting compressed file {File}", archivedFile.Name);
                 archivedFile.Delete();
             }
         }
