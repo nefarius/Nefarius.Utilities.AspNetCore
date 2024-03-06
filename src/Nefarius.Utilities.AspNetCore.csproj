@@ -38,10 +38,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="IPNetwork2" Version="3.0.665">
+        <PackageReference Include="IPNetwork2" Version="3.0.667">
             <Aliases>IPNetwork2</Aliases>
         </PackageReference>
-        <PackageReference Include="MinVer" Version="4.3.0">
+        <PackageReference Include="MinVer" Version="5.0.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
