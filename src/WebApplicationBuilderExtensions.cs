@@ -127,7 +127,8 @@ public static class WebApplicationBuilderExtensions
 
                 foreach (IPNetwork proxy in NetworkUtil.GetNetworks(NetworkInterfaceType.Ethernet))
                 {
-                    logger.Information("Adding known network {Subnet}", proxy);
+                    logger.ForContext<WebApplicationBuilderOptions>()
+                        .Information("Adding known network {Subnet}", proxy);
                     headerOptions.KnownNetworks.Add(
                         new Microsoft.AspNetCore.HttpOverrides.IPNetwork(proxy.Network, proxy.Cidr));
                 }
