@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
+using Serilog;
 using Serilog.Events;
 
 namespace Nefarius.Utilities.AspNetCore.Options;
@@ -57,4 +58,11 @@ public sealed class SerilogOptions
     ///     <see cref="ReadFromConfiguration" />enabled.
     /// </remarks>
     public bool WriteToFile { get; set; } = true;
+
+    /// <summary>
+    ///     The default Serilog <see cref="LoggerConfiguration" /> to use.
+    /// </summary>
+    public LoggerConfiguration Configuration { get; } = new LoggerConfiguration()
+        .MinimumLevel.Information()
+        .Enrich.FromLogContext();
 }

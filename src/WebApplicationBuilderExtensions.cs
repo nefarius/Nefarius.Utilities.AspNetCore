@@ -56,11 +56,7 @@ public static class WebApplicationBuilderExtensions
             W3CLoggerPatcher.Patch();
         }
 
-        LoggerConfiguration loggerConfiguration = new();
-
-        loggerConfiguration
-            .MinimumLevel.Information()
-            .Enrich.FromLogContext();
+        LoggerConfiguration loggerConfiguration = options.Serilog.Configuration;
 
         // apply some overrides that makes logs less noisy
         foreach ((string scope, LogEventLevel level) in options.Serilog.DefaultOverrides)
