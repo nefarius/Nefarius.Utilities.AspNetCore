@@ -1,9 +1,7 @@
-﻿extern alias IPNetwork2;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
-using System.Net.NetworkInformation;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -19,9 +17,6 @@ using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.File.Archive;
 using Serilog.Sinks.SystemConsole.Themes;
-
-using IPNetwork = IPNetwork2::System.Net.IPNetwork2;
-
 
 namespace Nefarius.Utilities.AspNetCore;
 
@@ -121,12 +116,12 @@ public static class WebApplicationBuilderExtensions
                 headerOptions.KnownProxies.Clear();
                 headerOptions.KnownNetworks.Clear();
 
-                foreach (IPNetwork proxy in NetworkUtil.GetNetworks(NetworkInterfaceType.Ethernet))
+                foreach (var proxy in NetworkUtil.GetNetworks())
                 {
                     logger.ForContext<WebApplicationBuilderOptions>()
                         .Information("Adding known network {Subnet}", proxy);
                     headerOptions.KnownNetworks.Add(
-                        new Microsoft.AspNetCore.HttpOverrides.IPNetwork(proxy.Network, proxy.Cidr));
+                        new(proxy.BaseAddress, proxy.PrefixLength));
                 }
             }
 
