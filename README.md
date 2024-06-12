@@ -1,6 +1,4 @@
-<img src="assets/NSS-128x128.png" align="right" />
-
-# Nefarius.Utilities.AspNetCore
+# <img src="assets/NSS-128x128.png" align="left" />Nefarius.Utilities.AspNetCore
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/nefarius/Nefarius.Utilities.AspNetCore/build.yml) ![Requirements](https://img.shields.io/badge/Requires-.NET%20%3E%3D6.0-blue.svg) [![Nuget](https://img.shields.io/nuget/v/Nefarius.Utilities.AspNetCore)](https://www.nuget.org/packages/Nefarius.Utilities.AspNetCore/) ![Nuget](https://img.shields.io/nuget/dt/Nefarius.Utilities.AspNetCore)
 
