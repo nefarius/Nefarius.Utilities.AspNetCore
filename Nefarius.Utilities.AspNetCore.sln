@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 		.github\workflows\build.yml = .github\workflows\build.yml
 		.github\workflows\publish-to-nuget.yml = .github\workflows\publish-to-nuget.yml
+		.github\workflows\generate-docs.yml = .github\workflows\generate-docs.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWebApp", "app\TestWebApp.csproj", "{8E220A41-128A-4D3F-966D-33DBF36DF6EA}"
