@@ -12,9 +12,15 @@ using IPNetwork = (System.Net.IPAddress BaseAddress, int PrefixLength);
 
 namespace Nefarius.Utilities.AspNetCore.Util;
 
+/// <summary>
+///     Networking utilities.
+/// </summary>
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-internal static class NetworkUtil
+public static class NetworkUtil
 {
+    /// <summary>
+    ///     Gets all discovered IP network.
+    /// </summary>
     public static IEnumerable<IPNetwork> GetNetworks()
     {
         return IPGlobalProperties
@@ -71,7 +77,7 @@ internal static class NetworkUtil
     ///     Computes the IPNetwork that the IP address belongs to
     /// </summary>
     /// <param name="info">The IP info</param>
-    /// <returns>The IPNetwork that th# IP belongs to</returns>
+    /// <returns>The IPNetwork that the IP belongs to</returns>
     private static IPNetwork GetIPNetwork(this UnicastIPAddressInformation info)
     {
         return new IPNetwork(info.GetIPNetworkPrefix(), info.PrefixLength);
