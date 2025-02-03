@@ -17,3 +17,7 @@
 - [WebApplicationBuilderOptions](./nefarius.utilities.aspnetcore.options.webapplicationbuilderoptions.md)
 
 - [WebApplicationOptions](./nefarius.utilities.aspnetcore.options.webapplicationoptions.md)
+
+## Namespace Nefarius.Utilities.AspNetCore.Util
+
+- [NetworkUtil](./nefarius.utilities.aspnetcore.util.networkutil.md)
