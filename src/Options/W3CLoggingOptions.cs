@@ -32,6 +32,11 @@ public sealed class W3CLoggingOptions
     internal W3CLoggingOptions() { }
 
     /// <summary>
+    ///     Gets whether W3C logging should be turned on.
+    /// </summary>
+    public bool UseW3CLogging { get; set; } = true;
+    
+    /// <summary>
     ///     Fields to include in log. Defaults to all of them.
     /// </summary>
     public W3CLoggingFields LoggingFields { get; set; } = W3CLoggingFields.All;

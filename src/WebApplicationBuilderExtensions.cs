@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
@@ -30,7 +31,7 @@ public static class WebApplicationBuilderExtensions
     ///     Configures logging and other basic services.
     /// </summary>
     public static WebApplicationBuilder Setup(this WebApplicationBuilder builder,
-        Action<WebApplicationBuilderOptions> configure = default)
+        Action<WebApplicationBuilderOptions>? configure = null)
     {
         WebApplicationBuilderOptions options =
             builder.Configuration
@@ -40,6 +41,8 @@ public static class WebApplicationBuilderExtensions
 
         options.Configuration = builder.Configuration;
         options.Environment = builder.Environment;
+        options.WebHost = builder.WebHost;
+        options.Host = builder.Host;
 
         configure?.Invoke(options);
 
@@ -51,56 +54,64 @@ public static class WebApplicationBuilderExtensions
             W3CLoggerPatcher.Patch();
         }
 
-        LoggerConfiguration loggerConfiguration = options.Serilog.Configuration;
+        Logger? logger = null;
 
-        // apply some overrides that makes logs less noisy
-        foreach ((string scope, LogEventLevel level) in options.Serilog.DefaultOverrides)
+        if (options.Serilog.UseSerilog)
         {
-            loggerConfiguration.MinimumLevel.Override(scope, level);
+            LoggerConfiguration loggerConfiguration = options.Serilog.Configuration;
+
+            // apply some overrides that makes logs less noisy
+            foreach ((string scope, LogEventLevel level) in options.Serilog.DefaultOverrides)
+            {
+                loggerConfiguration.MinimumLevel.Override(scope, level);
+            }
+
+            // load additional config from settings file(s)  
+            if (options.Serilog.ReadFromConfiguration)
+            {
+                loggerConfiguration.ReadFrom.Configuration(builder.Configuration);
+            }
+
+            // self-explanatory ;)
+            if (options.Serilog.WriteToConsole)
+            {
+                loggerConfiguration.WriteTo.Console(
+                    applyThemeToRedirectedOutput: true,
+                    theme: AnsiConsoleTheme.Literate
+                );
+            }
+
+            // self-explanatory ;)
+            if (options.Serilog.WriteToFile)
+            {
+                loggerConfiguration.WriteTo.File(
+                    Path.Combine(options.Serilog.LogsDirectory, options.Serilog.ServerLogFileName),
+                    rollingInterval: RollingInterval.Day,
+                    hooks: new ArchiveHooks(CompressionLevel.SmallestSize)
+                );
+            }
+
+            logger = loggerConfiguration.CreateLogger();
+
+            // logger instance used by non-DI-code
+            Log.Logger = logger;
+
+            builder.Host.UseSerilog(logger);
         }
 
-        // load additional config from settings file(s)  
-        if (options.Serilog.ReadFromConfiguration)
+        if (options.W3C.UseW3CLogging)
         {
-            loggerConfiguration.ReadFrom.Configuration(builder.Configuration);
+            // save separate access log for analysis
+            builder.Services.AddW3CLogging(logging =>
+            {
+                logging.LoggingFields = options.W3C.LoggingFields;
+                logging.FileSizeLimit = options.W3C.FileSizeLimit;
+                logging.RetainedFileCountLimit = options.W3C.RetainedFileCountLimit;
+                logging.FileName = options.W3C.FileName;
+                logging.LogDirectory = options.W3C.LogsDirectory;
+                logging.FlushInterval = options.W3C.FlushInterval;
+            });
         }
-
-        // self-explanatory ;)
-        if (options.Serilog.WriteToConsole)
-        {
-            loggerConfiguration.WriteTo.Console(
-                applyThemeToRedirectedOutput: true,
-                theme: AnsiConsoleTheme.Literate
-            );
-        }
-
-        // self-explanatory ;)
-        if (options.Serilog.WriteToFile)
-        {
-            loggerConfiguration.WriteTo.File(
-                Path.Combine(options.Serilog.LogsDirectory, options.Serilog.ServerLogFileName),
-                rollingInterval: RollingInterval.Day,
-                hooks: new ArchiveHooks(CompressionLevel.SmallestSize)
-            );
-        }
-
-        Logger logger = loggerConfiguration.CreateLogger();
-
-        // logger instance used by non-DI-code
-        Log.Logger = logger;
-
-        builder.Host.UseSerilog(logger);
-
-        // save separate access log for analysis
-        builder.Services.AddW3CLogging(logging =>
-        {
-            logging.LoggingFields = options.W3C.LoggingFields;
-            logging.FileSizeLimit = options.W3C.FileSizeLimit;
-            logging.RetainedFileCountLimit = options.W3C.RetainedFileCountLimit;
-            logging.FileName = options.W3C.FileName;
-            logging.LogDirectory = options.W3C.LogsDirectory;
-            logging.FlushInterval = options.W3C.FlushInterval;
-        });
 
         // forwarding header options
         builder.Services.Configure<ForwardedHeadersOptions>(headerOptions =>
@@ -118,10 +129,10 @@ public static class WebApplicationBuilderExtensions
 
                 foreach (var proxy in NetworkUtil.GetNetworks())
                 {
-                    logger.ForContext<WebApplicationBuilderOptions>()
+                    logger?.ForContext<WebApplicationBuilderOptions>()
                         .Information("Adding known network {Subnet}", proxy);
                     headerOptions.KnownNetworks.Add(
-                        new(proxy.BaseAddress, proxy.PrefixLength));
+                        new IPNetwork(proxy.BaseAddress, proxy.PrefixLength));
                 }
             }
 

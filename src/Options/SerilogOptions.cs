@@ -8,10 +8,15 @@ using Serilog.Events;
 namespace Nefarius.Utilities.AspNetCore.Options;
 
 /// <summary>
-///     Options to influence Serilog behaviour.
+///     Options to influence Serilog behavior.
 /// </summary>
 public sealed class SerilogOptions
 {
+    /// <summary>
+    ///     Gets whether Serilog should be registered at all as the app logger.
+    /// </summary>
+    public bool UseSerilog { get; set; } = true;
+    
     /// <summary>
     ///     Absolute path to directory where logs will get stored.
     /// </summary>
@@ -51,7 +56,7 @@ public sealed class SerilogOptions
     public bool WriteToConsole { get; set; } = true;
 
     /// <summary>
-    ///     If set, writes log to log file with name <see cref="ServerLogFileName" /> in <see cref="LogsDirectory" />.
+    ///     If set, writes log to logfile with name <see cref="ServerLogFileName" /> in <see cref="LogsDirectory" />.
     /// </summary>
     /// <remarks>
     ///     Make sure to disable this if you have a duplicate entry in your settings and have

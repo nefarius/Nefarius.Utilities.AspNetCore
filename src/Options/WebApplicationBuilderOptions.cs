@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
@@ -27,12 +28,23 @@ public sealed class WebApplicationBuilderOptions
     public ForwardingOptions Forwarding { get; } = new();
 
     /// <summary>
-    ///     A collection of configuration providers for the application to compose. This is useful for adding new configuration sources and providers.
+    ///     A collection of configuration providers for the application to compose. This is useful for adding new configuration
+    ///     sources and providers.
     /// </summary>
     public ConfigurationManager Configuration { get; internal set; } = null!;
-    
+
     /// <summary>
     ///     Provides information about the web hosting environment an application is running.
     /// </summary>
     public IWebHostEnvironment Environment { get; internal set; } = null!;
+
+    /// <summary>
+    ///     Provides the <see cref="ConfigureWebHostBuilder" /> to the options.
+    /// </summary>
+    public ConfigureWebHostBuilder WebHost { get; internal set; } = null!;
+
+    /// <summary>
+    ///     Provides the <see cref="ConfigureHostBuilder" /> to the options.
+    /// </summary>
+    public ConfigureHostBuilder Host { get; internal set; } = null!;
 }
