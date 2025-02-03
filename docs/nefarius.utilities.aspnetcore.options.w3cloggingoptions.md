@@ -136,3 +136,15 @@ public int RetainedFileCountLimit { get; set; }
 #### Property Value
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+### <a id="properties-usew3clogging"/>**UseW3CLogging**
+
+Gets whether W3C logging should be turned on.
+
+```csharp
+public bool UseW3CLogging { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>

@@ -2,7 +2,7 @@
 
 Namespace: Nefarius.Utilities.AspNetCore.Options
 
-Options to influence Serilog behaviour.
+Options to influence Serilog behavior.
 
 ```csharp
 public sealed class SerilogOptions
@@ -76,6 +76,18 @@ public string ServerLogFileName { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### <a id="properties-useserilog"/>**UseSerilog**
+
+Gets whether Serilog should be registered at all as the app logger.
+
+```csharp
+public bool UseSerilog { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-writetoconsole"/>**WriteToConsole**
 
 If set, writes logs to the console.
@@ -95,7 +107,7 @@ Make sure to disable this if you have a duplicate entry in your settings and hav
 
 ### <a id="properties-writetofile"/>**WriteToFile**
 
-If set, writes log to log file with name [SerilogOptions.ServerLogFileName](./nefarius.utilities.aspnetcore.options.serilogoptions.md#serverlogfilename) in [SerilogOptions.LogsDirectory](./nefarius.utilities.aspnetcore.options.serilogoptions.md#logsdirectory).
+If set, writes log to logfile with name [SerilogOptions.ServerLogFileName](./nefarius.utilities.aspnetcore.options.serilogoptions.md#serverlogfilename) in [SerilogOptions.LogsDirectory](./nefarius.utilities.aspnetcore.options.serilogoptions.md#logsdirectory).
 
 ```csharp
 public bool WriteToFile { get; set; }
