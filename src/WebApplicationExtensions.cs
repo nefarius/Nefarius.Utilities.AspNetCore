@@ -1,8 +1,14 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+
+using Nefarius.Utilities.AspNetCore.Options;
 
 using Serilog;
 
@@ -19,7 +25,7 @@ public static class WebApplicationExtensions
     /// <summary>
     ///     Configures reverse proxy detection, logging, etc.
     /// </summary>
-    public static WebApplication Setup(this WebApplication app, Action<WebApplicationOptions> configure = default)
+    public static WebApplication Setup(this WebApplication app, Action<WebApplicationOptions>? configure = null)
     {
         WebApplicationOptions options =
             app.Configuration
@@ -29,8 +35,14 @@ public static class WebApplicationExtensions
 
         configure?.Invoke(options);
 
-        // required for log rotation with compression to work properly
-        app.Lifetime.ApplicationStopped.Register(Log.CloseAndFlush);
+        IOptions<WebApplicationBuilderOptions> appBuilderOptions =
+            app.Services.GetRequiredService<IOptions<WebApplicationBuilderOptions>>();
+
+        if (appBuilderOptions.Value.Serilog.UseSerilog)
+        {
+            // required for log rotation with compression to work properly
+            app.Lifetime.ApplicationStopped.Register(Log.CloseAndFlush);
+        }
 
         if (options.UseForwardedHeaders)
         {
@@ -38,12 +50,12 @@ public static class WebApplicationExtensions
             app.UseForwardedHeaders();
         }
 
-        if (options.UseW3CLogging)
+        if (appBuilderOptions.Value.W3C.UseW3CLogging)
         {
             app.UseW3CLogging();
         }
 
-        if (options.UseSerilogRequestLogging)
+        if (appBuilderOptions.Value.Serilog.UseSerilog && options.UseSerilogRequestLogging)
         {
             app.UseSerilogRequestLogging(
                 opts =>

@@ -14,11 +14,6 @@ public sealed class WebApplicationOptions
     public bool UseForwardedHeaders { get; set; } = true;
 
     /// <summary>
-    ///     Log to access log file in W3C format.
-    /// </summary>
-    public bool UseW3CLogging { get; set; } = true;
-
-    /// <summary>
     ///     Log web requests to application log as well.
     /// </summary>
     public bool UseSerilogRequestLogging { get; set; } = false;

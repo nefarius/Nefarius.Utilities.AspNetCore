@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 using Nefarius.Utilities.AspNetCore.Internal;
 using Nefarius.Utilities.AspNetCore.Options;
@@ -45,6 +46,9 @@ public static class WebApplicationBuilderExtensions
         options.Host = builder.Host;
 
         configure?.Invoke(options);
+
+        builder.Services.AddSingleton<IOptions<WebApplicationBuilderOptions>>(_ =>
+            new OptionsWrapper<WebApplicationBuilderOptions>(options));
 
         // apply patch that alters rolling file logic
         if (options.W3C.CompressDeletedLogFiles)
