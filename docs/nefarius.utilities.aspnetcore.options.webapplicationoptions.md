@@ -36,18 +36,6 @@ public bool UseSerilogRequestLogging { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### <a id="properties-usew3clogging"/>**UseW3CLogging**
-
-Log to access log file in W3C format.
-
-```csharp
-public bool UseW3CLogging { get; set; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
 ## Constructors
 
 ### <a id="constructors-.ctor"/>**WebApplicationOptions()**
