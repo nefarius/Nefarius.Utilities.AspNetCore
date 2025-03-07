@@ -128,15 +128,24 @@ public static class WebApplicationBuilderExtensions
             // when used with Docker, the container IP of the reverse proxy can change so auto-detect fixes that
             if (options.Forwarding.AutoDetectPrivateNetworks)
             {
-                headerOptions.KnownProxies.Clear();
-                headerOptions.KnownNetworks.Clear();
-
-                foreach (var proxy in NetworkUtil.GetNetworks())
+                // running on Azure in a sandboxed environment, we do not have access to networking info
+                if (Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID") != null)
                 {
                     logger?.ForContext<WebApplicationBuilderOptions>()
-                        .Information("Adding known network {Subnet}", proxy);
-                    headerOptions.KnownNetworks.Add(
-                        new IPNetwork(proxy.BaseAddress, proxy.PrefixLength));
+                        .Warning("Detected running on Azure, skipping auto-setting KnownProxies and KnownNetworks");
+                }
+                else
+                {
+                    headerOptions.KnownProxies.Clear();
+                    headerOptions.KnownNetworks.Clear();
+
+                    foreach (var proxy in NetworkUtil.GetNetworks())
+                    {
+                        logger?.ForContext<WebApplicationBuilderOptions>()
+                            .Information("Adding known network {Subnet}", proxy);
+                        headerOptions.KnownNetworks.Add(
+                            new IPNetwork(proxy.BaseAddress, proxy.PrefixLength));
+                    }
                 }
             }
 
