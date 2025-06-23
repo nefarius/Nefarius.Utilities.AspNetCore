@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -57,20 +58,19 @@ public static class WebApplicationExtensions
 
         if (appBuilderOptions.Value.Serilog.UseSerilog && options.UseSerilogRequestLogging)
         {
-            app.UseSerilogRequestLogging(
-                opts =>
+            app.UseSerilogRequestLogging(opts =>
+            {
+                opts.MessageTemplate =
+                    "{RemoteIpAddress} {RequestScheme} {RequestHost} {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
+                opts.EnrichDiagnosticContext = (
+                    diagnosticContext,
+                    httpContext) =>
                 {
-                    opts.MessageTemplate =
-                        "{RemoteIpAddress} {RequestScheme} {RequestHost} {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
-                    opts.EnrichDiagnosticContext = (
-                        diagnosticContext,
-                        httpContext) =>
-                    {
-                        diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value);
-                        diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
-                        diagnosticContext.Set("RemoteIpAddress", httpContext.Connection.RemoteIpAddress);
-                    };
-                });
+                    diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value);
+                    diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
+                    diagnosticContext.Set("RemoteIpAddress", httpContext.Connection.RemoteIpAddress ?? IPAddress.None);
+                };
+            });
         }
 
         return app;
