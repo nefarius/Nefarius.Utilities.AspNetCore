@@ -10,7 +10,7 @@
         <PackageProjectUrl>https://github.com/nefarius/Nefarius.Utilities.AspNetCore</PackageProjectUrl>
         <Authors>Benjamin Höglinger-Stelzer</Authors>
         <OutputPath>$(SolutionDir)bin\</OutputPath>
-        <Copyright>Copyright © Benjamin Höglinger-Stelzer 2022-2024</Copyright>
+        <Copyright>Copyright © Benjamin Höglinger-Stelzer 2022-2025</Copyright>
         <LangVersion>latest</LangVersion>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Description>My opinionated collection of utilities for ASP.NET Core applications.</Description>
