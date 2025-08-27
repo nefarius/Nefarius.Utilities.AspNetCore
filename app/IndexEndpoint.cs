@@ -12,6 +12,6 @@ public sealed class IndexEndpoint : EndpointWithoutRequest
 
     public override Task HandleAsync(CancellationToken ct)
     {
-        return SendOkAsync("Hello!", ct);
+        return Send.OkAsync("Hello!", ct);
     }
 }
