@@ -144,14 +144,14 @@ internal sealed class W3CLoggerPatcher
     private static Type GetTypeByName(string name)
     {
         return
-            AppDomain.CurrentDomain.GetAssemblies()
+            AppDomain.CurrentDomain.GetAssemblies().AsEnumerable()
                 .Reverse()
                 .Select(assembly => assembly.GetType(name))
                 .FirstOrDefault(t => t != null)
             // Safely delete the following part
             // if you do not want fall back to first partial result
             ??
-            AppDomain.CurrentDomain.GetAssemblies()
+            AppDomain.CurrentDomain.GetAssemblies().AsEnumerable()
                 .Reverse()
                 .SelectMany(assembly => assembly.GetTypes())
                 .FirstOrDefault(t => t.Name.Contains(name));

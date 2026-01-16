@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
+        <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>NSS-128x128.png</PackageIcon>
@@ -10,7 +10,7 @@
         <PackageProjectUrl>https://github.com/nefarius/Nefarius.Utilities.AspNetCore</PackageProjectUrl>
         <Authors>Benjamin Höglinger-Stelzer</Authors>
         <OutputPath>$(SolutionDir)bin\</OutputPath>
-        <Copyright>Copyright © Benjamin Höglinger-Stelzer 2022-2025</Copyright>
+        <Copyright>Copyright © Benjamin Höglinger-Stelzer 2022-2026</Copyright>
         <LangVersion>latest</LangVersion>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Description>My opinionated collection of utilities for ASP.NET Core applications.</Description>
@@ -42,8 +42,8 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="MonoMod.RuntimeDetour" Version="25.3.2" />
-        <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+        <PackageReference Include="MonoMod.RuntimeDetour" Version="25.3.3" />
+        <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
         <PackageReference Include="Serilog.Sinks.File.Archive" Version="1.0.6" />
         <PackageReference Include="SharpZipLib" Version="1.4.2" />
     </ItemGroup>
