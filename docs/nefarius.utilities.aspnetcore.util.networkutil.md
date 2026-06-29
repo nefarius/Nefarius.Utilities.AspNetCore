@@ -8,7 +8,8 @@ Networking utilities.
 public static class NetworkUtil
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [NetworkUtil](./nefarius.utilities.aspnetcore.util.networkutil.md)
+Inheritance [Object](https://learn.microsoft.com/dotnet/api/system.object) → [NetworkUtil](./nefarius.utilities.aspnetcore.util.networkutil.md)<br>
+Attributes [ExtensionAttribute](https://learn.microsoft.com/dotnet/api/system.runtime.compilerservices.extensionattribute)
 
 ## Methods
 
@@ -22,4 +23,4 @@ public static IEnumerable<IPNetwork> GetNetworks()
 
 #### Returns
 
-[IEnumerable&lt;IPNetwork&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)
+[IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1)<[IPNetwork](https://learn.microsoft.com/dotnet/api/system.net.ipnetwork)>

@@ -8,7 +8,7 @@ Options to influence [WebApplicationExtensions](./nefarius.utilities.aspnetcore.
 public sealed class WebApplicationOptions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [WebApplicationOptions](./nefarius.utilities.aspnetcore.options.webapplicationoptions.md)
+Inheritance [Object](https://learn.microsoft.com/dotnet/api/system.object) → [WebApplicationOptions](./nefarius.utilities.aspnetcore.options.webapplicationoptions.md)
 
 ## Properties
 
@@ -22,7 +22,7 @@ public bool UseForwardedHeaders { get; set; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 ### <a id="properties-useserilogrequestlogging"/>**UseSerilogRequestLogging**
 
@@ -34,7 +34,7 @@ public bool UseSerilogRequestLogging { get; set; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 ## Constructors
 

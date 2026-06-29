@@ -8,13 +8,13 @@ Options to influence Serilog behavior.
 public sealed class SerilogOptions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [SerilogOptions](./nefarius.utilities.aspnetcore.options.serilogoptions.md)
+Inheritance [Object](https://learn.microsoft.com/dotnet/api/system.object) → [SerilogOptions](./nefarius.utilities.aspnetcore.options.serilogoptions.md)
 
 ## Properties
 
 ### <a id="properties-configuration"/>**Configuration**
 
-The default Serilog  to use.
+The default Serilog LoggerConfiguration to use.
 
 ```csharp
 public LoggerConfiguration Configuration { get; }
@@ -34,7 +34,7 @@ public Dictionary<String, LogEventLevel> DefaultOverrides { get; }
 
 #### Property Value
 
-[Dictionary&lt;String, LogEventLevel&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2)<br>
+[Dictionary](https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2)<[String](https://learn.microsoft.com/dotnet/api/system.string), LogEventLevel><br>
 
 **Remarks:**
 
@@ -50,7 +50,7 @@ public string LogsDirectory { get; set; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+[String](https://learn.microsoft.com/dotnet/api/system.string)<br>
 
 ### <a id="properties-readfromconfiguration"/>**ReadFromConfiguration**
 
@@ -62,7 +62,7 @@ public bool ReadFromConfiguration { get; set; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 ### <a id="properties-serverlogfilename"/>**ServerLogFileName**
 
@@ -74,7 +74,7 @@ public string ServerLogFileName { get; set; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+[String](https://learn.microsoft.com/dotnet/api/system.string)<br>
 
 ### <a id="properties-useserilog"/>**UseSerilog**
 
@@ -86,7 +86,7 @@ public bool UseSerilog { get; set; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 ### <a id="properties-writetoconsole"/>**WriteToConsole**
 
@@ -98,7 +98,7 @@ public bool WriteToConsole { get; set; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 **Remarks:**
 
@@ -115,7 +115,7 @@ public bool WriteToFile { get; set; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 **Remarks:**
 

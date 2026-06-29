@@ -8,7 +8,7 @@ W3C Logging options.
 public sealed class W3CLoggingOptions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [W3CLoggingOptions](./nefarius.utilities.aspnetcore.options.w3cloggingoptions.md)
+Inheritance [Object](https://learn.microsoft.com/dotnet/api/system.object) → [W3CLoggingOptions](./nefarius.utilities.aspnetcore.options.w3cloggingoptions.md)
 
 ## Properties
 
@@ -24,7 +24,7 @@ public bool CompressDeletedLogFiles { get; set; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 ### <a id="properties-compressedlogsdirectory"/>**CompressedLogsDirectory**
 
@@ -37,7 +37,7 @@ public string CompressedLogsDirectory { get; set; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+[String](https://learn.microsoft.com/dotnet/api/system.string)<br>
 
 **Remarks:**
 
@@ -54,7 +54,7 @@ public string FileName { get; set; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+[String](https://learn.microsoft.com/dotnet/api/system.string)<br>
 
 ### <a id="properties-filesizelimit"/>**FileSizeLimit**
 
@@ -66,7 +66,7 @@ public Nullable<Int32> FileSizeLimit { get; set; }
 
 #### Property Value
 
-[Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+[Nullable](https://learn.microsoft.com/dotnet/api/system.nullable-1)<[Int32](https://learn.microsoft.com/dotnet/api/system.int32)><br>
 
 ### <a id="properties-flushinterval"/>**FlushInterval**
 
@@ -78,7 +78,7 @@ public TimeSpan FlushInterval { get; set; }
 
 #### Property Value
 
-[TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan)<br>
+[TimeSpan](https://learn.microsoft.com/dotnet/api/system.timespan)<br>
 
 ### <a id="properties-loggingfields"/>**LoggingFields**
 
@@ -90,7 +90,7 @@ public W3CLoggingFields LoggingFields { get; set; }
 
 #### Property Value
 
-W3CLoggingFields<br>
+[W3CLoggingFields](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.httplogging.w3cloggingfields)<br>
 
 ### <a id="properties-logsdirectory"/>**LogsDirectory**
 
@@ -103,7 +103,7 @@ public string LogsDirectory { get; set; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+[String](https://learn.microsoft.com/dotnet/api/system.string)<br>
 
 **Remarks:**
 
@@ -121,7 +121,7 @@ public int RetainedCompressedFileCountLimit { get; set; }
 
 #### Property Value
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+[Int32](https://learn.microsoft.com/dotnet/api/system.int32)<br>
 
 ### <a id="properties-retainedfilecountlimit"/>**RetainedFileCountLimit**
 
@@ -135,7 +135,7 @@ public int RetainedFileCountLimit { get; set; }
 
 #### Property Value
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+[Int32](https://learn.microsoft.com/dotnet/api/system.int32)<br>
 
 ### <a id="properties-usew3clogging"/>**UseW3CLogging**
 
@@ -147,4 +147,4 @@ public bool UseW3CLogging { get; set; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>

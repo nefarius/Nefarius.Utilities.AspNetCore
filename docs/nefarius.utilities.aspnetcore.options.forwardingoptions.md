@@ -8,7 +8,7 @@ Options to influence HTTP header forwarding behaviour.
 public sealed class ForwardingOptions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ForwardingOptions](./nefarius.utilities.aspnetcore.options.forwardingoptions.md)
+Inheritance [Object](https://learn.microsoft.com/dotnet/api/system.object) → [ForwardingOptions](./nefarius.utilities.aspnetcore.options.forwardingoptions.md)
 
 ## Properties
 
@@ -22,11 +22,11 @@ public bool AllowFromAny { get; set; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 #### Exceptions
 
-[ArgumentException](https://docs.microsoft.com/en-us/dotnet/api/system.argumentexception)<br>
+[ArgumentException](https://learn.microsoft.com/dotnet/api/system.argumentexception)<br>
 This can not be enabled if [ForwardingOptions.AutoDetectPrivateNetworks](./nefarius.utilities.aspnetcore.options.forwardingoptions.md#autodetectprivatenetworks) is enabled.
 
 **Remarks:**
@@ -43,11 +43,11 @@ public bool AutoDetectPrivateNetworks { get; set; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 #### Exceptions
 
-[ArgumentException](https://docs.microsoft.com/en-us/dotnet/api/system.argumentexception)<br>
+[ArgumentException](https://learn.microsoft.com/dotnet/api/system.argumentexception)<br>
 This can not be enabled if [ForwardingOptions.AllowFromAny](./nefarius.utilities.aspnetcore.options.forwardingoptions.md#allowfromany) is enabled.
 
 **Remarks:**
