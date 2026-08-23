@@ -117,7 +117,10 @@ var builder = WebApplication.CreateBuilder().Setup(options =>
 
 `AutoDetectPrivateNetworks` and `AllowFromAny` are mutually exclusive, and
 `AutoDetectPrivateNetworks` defaults to `true`. Disable it first, otherwise
-setting `AllowFromAny` throws:
+setting `AllowFromAny` throws.
+
+⚠️ `AllowFromAny = true` is safe only when the app sits behind a trusted reverse
+proxy. Direct clients can spoof forwarded headers.
 
 ```csharp
 var builder = WebApplication.CreateBuilder().Setup(options =>

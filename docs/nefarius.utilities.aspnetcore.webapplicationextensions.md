@@ -13,19 +13,20 @@ Attributes [ExtensionAttribute](https://learn.microsoft.com/dotnet/api/system.ru
 
 ## Methods
 
-### <a id="methods-setup"/>**Setup(WebApplication, Action&lt;WebApplicationOptions&gt;)**
+### <a id="methods-setup"/>**Setup(WebApplication, Action&lt;WebApplicationOptions&gt;?)**
 
-Configures reverse proxy detection, logging, etc.
+Configures reverse proxy detection, logging, etc. Loads [WebApplicationOptions](./nefarius.utilities.aspnetcore.options.webapplicationoptions.md) from configuration when no `configure` callback is supplied.
 
 ```csharp
-public static WebApplication Setup(WebApplication app, Action<WebApplicationOptions> configure)
+public static WebApplication Setup(WebApplication app, Action<WebApplicationOptions>? configure = null)
 ```
 
 #### Parameters
 
 `app` [WebApplication](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.webapplication)<br>
 
-`configure` [Action](https://learn.microsoft.com/dotnet/api/system.action-1)<[WebApplicationOptions](./nefarius.utilities.aspnetcore.options.webapplicationoptions.md)><br>
+`configure` [Action](https://learn.microsoft.com/dotnet/api/system.action-1)<[WebApplicationOptions](./nefarius.utilities.aspnetcore.options.webapplicationoptions.md)>?<br>
+Optional. When omitted (`null`), `Setup()` still loads `WebApplicationOptions` from configuration.
 
 #### Returns
 
