@@ -113,6 +113,20 @@ var builder = WebApplication.CreateBuilder().Setup(options =>
 });
 ```
 
+#### Allow forwarded headers from any proxy
+
+`AutoDetectPrivateNetworks` and `AllowFromAny` are mutually exclusive, and
+`AutoDetectPrivateNetworks` defaults to `true`. Disable it first, otherwise
+setting `AllowFromAny` throws:
+
+```csharp
+var builder = WebApplication.CreateBuilder().Setup(options =>
+{
+    options.Forwarding.AutoDetectPrivateNetworks = false;
+    options.Forwarding.AllowFromAny = true;
+});
+```
+
 ### From `appsettings.json`
 
 You can also alter the defaults from your configuration; stick to the option classes and property naming conventions
@@ -127,7 +141,9 @@ like so:
     }
   },
   "WebApplicationBuilderOptions": {
-    "AutoDetectPrivateNetworks": false
+    "Forwarding": {
+      "AutoDetectPrivateNetworks": false
+    }
   },
   "WebApplicationOptions": {
     "UseForwardedHeaders": false
@@ -147,6 +163,7 @@ environment:
   - TZ=Europe/Vienna
   - WebApplicationBuilderOptions__W3C__RetainedCompressedFileCountLimit=600
   - WebApplicationBuilderOptions__W3C__RetainedFileCountLimit=12
+  - WebApplicationBuilderOptions__Forwarding__AutoDetectPrivateNetworks=false
 ...
 ```
 

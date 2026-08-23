@@ -154,7 +154,7 @@ internal sealed class W3CLoggerPatcher
             AppDomain.CurrentDomain.GetAssemblies().AsEnumerable()
                 .Reverse()
                 .SelectMany(assembly => assembly.GetTypes())
-                .FirstOrDefault(t => t.Name.Contains(name));
+                .FirstOrDefault(t => t.FullName != null && t.FullName.Contains(name));
     }
 
     /// <summary>
