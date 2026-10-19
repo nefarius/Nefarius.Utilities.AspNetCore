@@ -2,13 +2,14 @@
 
 Namespace: Nefarius.Utilities.AspNetCore
 
-Extensions for .
+Extensions for [WebApplicationBuilder](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.webapplicationbuilder).
 
 ```csharp
 public static class WebApplicationBuilderExtensions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [WebApplicationBuilderExtensions](./nefarius.utilities.aspnetcore.webapplicationbuilderextensions.md)
+Inheritance [Object](https://learn.microsoft.com/dotnet/api/system.object) → [WebApplicationBuilderExtensions](./nefarius.utilities.aspnetcore.webapplicationbuilderextensions.md)<br>
+Attributes [ExtensionAttribute](https://learn.microsoft.com/dotnet/api/system.runtime.compilerservices.extensionattribute)
 
 ## Methods
 
@@ -22,10 +23,10 @@ public static WebApplicationBuilder Setup(WebApplicationBuilder builder, Action<
 
 #### Parameters
 
-`builder` WebApplicationBuilder<br>
+`builder` [WebApplicationBuilder](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.webapplicationbuilder)<br>
 
-`configure` [Action&lt;WebApplicationBuilderOptions&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+`configure` [Action](https://learn.microsoft.com/dotnet/api/system.action-1)<[WebApplicationBuilderOptions](./nefarius.utilities.aspnetcore.options.webapplicationbuilderoptions.md)><br>
 
 #### Returns
 
-WebApplicationBuilder
+[WebApplicationBuilder](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.webapplicationbuilder)
